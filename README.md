@@ -129,7 +129,7 @@ in `.github/workflows/`, hourly and daily.
 **Momentum +43** ▲ heating up · 1 commits this week vs 0 last week
 
 > [!NOTE]
-> Some numbers are stale this run — rival star velocity is estimated (some lookups were skipped)
+> Some numbers are stale this run — rival ladder cached from the last daily run
 
 <sub>updated just now · every number comes from the GitHub API, nothing is hand-edited</sub>
 <!-- rivalmode:end scoreboard -->
