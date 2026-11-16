@@ -1,0 +1,20 @@
+{
+  "name": "terminal",
+  "label": "Terminal",
+  "dark": true,
+  "background": "#0a0f0a",
+  "panel": "#101a10",
+  "border": "#1f3d1f",
+  "track": "#16251a",
+  "text": "#b8ffc2",
+  "muted": "#5f9e6b",
+  "accent": "#39ff14",
+  "accentSoft": "#22c55e",
+  "good": "#39ff14",
+  "bad": "#ff5f5f",
+  "warn": "#e5ff5f",
+  "barColors": ["#39ff14", "#5fd35f", "#a8ff60", "#2dd4bf", "#e5ff5f", "#7fffd4", "#b8ffc2", "#5f9e6b"],
+  "pattern": "scanlines",
+  "shape": "sharp",
+  "glow": true
+}

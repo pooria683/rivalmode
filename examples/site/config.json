@@ -1,0 +1,6 @@
+{
+  "$comment": "A site, list, or docs repo: slow and steady, so stars and issues matter more than raw commits.",
+  "theme": "paper",
+  "rivals": { "fallbackTopics": ["documentation", "awesome-list", "static-site"], "clusterSize": 10 },
+  "points": { "commit": 1, "merge": 8, "star": 6, "fork": 10, "release": 15, "issueClosed": 6 }
+}

@@ -1,0 +1,138 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Tests (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # The unit suite is dependency-free and offline by design: no install step,
+      # no token, no network. If this job ever needs `npm ci`, something broke.
+      - name: Run tests
+        run: npm test
+      - name: Fail if runtime needs dependencies
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            const runtime = Object.keys(pkg.dependencies || {});
+            if (runtime.length) {
+              console.error('RivalMode must ship with zero runtime dependencies, found:', runtime.join(', '));
+              process.exit(1);
+            }
+            console.log('runtime dependencies: none ✓');
+          "
+
+  lint-workflows:
+    name: Workflows are valid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse every workflow as YAML
+        run: |
+          pip install --quiet pyyaml
+          python3 - <<'PY'
+          import glob, sys, yaml
+          ok = True
+          for path in sorted(glob.glob('.github/workflows/*.yml')):
+              try:
+                  doc = yaml.safe_load(open(path))
+                  assert doc, 'empty workflow'
+                  assert 'jobs' in doc, 'no jobs'
+                  jobs = doc['jobs']
+                  assert isinstance(jobs, dict) and jobs, 'jobs must be a mapping'
+                  for name, job in jobs.items():
+                      assert 'runs-on' in job, f'{name} has no runs-on'
+                      assert 'steps' in job, f'{name} has no steps'
+                  print(f'ok   {path} ({len(jobs)} job(s))')
+              except Exception as err:
+                  ok = False
+                  print(f'FAIL {path}: {err}')
+          sys.exit(0 if ok else 1)
+          PY
+
+  integration:
+    # The full pipeline against a scratch repo: install, render, commit, rerun,
+    # and prove the second run is a no-op. This is the test that would have
+    # caught "it works locally but never commits in CI".
+    name: Full pipeline on a scratch repo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install into an empty repo
+        run: |
+          set -euo pipefail
+          SCRATCH="$RUNNER_TEMP/scratch"
+          mkdir -p "$SCRATCH"
+          cp -r src themes package.json .github "$SCRATCH/"
+          cp -r tests "$SCRATCH/"
+          cd "$SCRATCH"
+          printf '# scratch project\n\nA repo that does not exist yet.\n' > README.md
+          git init -q && git config user.email ci@example.com && git config user.name ci
+          git add -A && git commit -qm "initial"
+          node src/cli.mjs setup --theme=synthwave --title="Scratch"
+          node src/cli.mjs scoreboard --mock
+          test -f assets/rivalmode/scoreboard.svg
+          test -f assets/rivalmode/rivals.svg
+          grep -q "rivalmode:start scoreboard" README.md
+          echo "first run produced $(ls assets/rivalmode/*.svg | wc -l) cards"
+
+      - name: Second run must change nothing
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          node src/cli.mjs scoreboard --mock
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::second identical run changed files — commits would churn forever"
+            git status --porcelain
+            exit 1
+          fi
+          echo "idempotent ✓"
+
+      - name: Uninstall leaves no residue
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          node src/cli.mjs uninstall
+          test ! -d .rivalmode || { echo "::error::.rivalmode survived uninstall"; exit 1; }
+          test ! -d assets/rivalmode || { echo "::error::generated assets survived uninstall"; exit 1; }
+          ! grep -q "rivalmode:start" README.md || { echo "::error::README markers survived uninstall"; exit 1; }
+          grep -q "scratch project" README.md || { echo "::error::uninstall damaged the README"; exit 1; }
+          echo "clean uninstall ✓"
+
+      - name: Degraded mode without a token
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          # No token and no network reachable repo: this must fail loudly with a
+          # useful message rather than writing a scoreboard full of zeroes.
+          unset GITHUB_TOKEN
+          if node src/cli.mjs scoreboard 2>err.txt; then
+            echo "::error::expected failure without a token, got success"
+            exit 1
+          fi
+          grep -qi "could not read\|token\|rate limit" err.txt || { echo "::error::unhelpful error message:"; cat err.txt; exit 1; }
+          echo "degrades with a clear message ✓"

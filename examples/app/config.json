@@ -1,0 +1,6 @@
+{
+  "$comment": "A web app / SaaS: star-driven rivals, so weight stars and forks heavily.",
+  "theme": "synthwave",
+  "rivals": { "fallbackTopics": ["web-app", "nextjs", "saas"], "clusterSize": 12, "minStars": 3 },
+  "points": { "commit": 2, "merge": 12, "star": 8, "fork": 12, "release": 25 }
+}

@@ -1,0 +1,6 @@
+{
+  "repo": "pooria683/rivalmode",
+  "rivals": {
+    "fallbackTopics": ["github-actions", "readme", "developer-tools", "gamification"]
+  }
+}

@@ -1,0 +1,70 @@
+name: RivalMode setup
+
+# Runs once on install (and any time you edit .rivalmode/config.json).
+# Writes the README sections, renders the first scoreboard, and commits it —
+# so a fresh "Use this template" repo shows a live card within one run.
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - '.rivalmode/config.json'
+      - 'src/**'
+      - 'themes/**'
+      - '.github/workflows/rivalmode-setup.yml'
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: 'Theme to install (see themes/)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rivalmode-setup-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and render
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RIVALMODE_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ -n "${{ inputs.theme }}" ]; then
+            node src/cli.mjs setup --theme="${{ inputs.theme }}"
+          else
+            node src/cli.mjs setup
+          fi
+          node src/cli.mjs scoreboard
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "rivalmode[bot]"
+          git config user.email "rivalmode[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "RivalMode is already set up"
+            exit 0
+          fi
+          git add -A
+          git commit -m "chore(rivalmode): install + first scoreboard [skip ci]"
+          for attempt in 1 2 3; do
+            if git push; then break; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          done

@@ -1,0 +1,20 @@
+{
+  "name": "synthwave",
+  "label": "Synthwave",
+  "dark": true,
+  "background": "#160b28",
+  "panel": "#221238",
+  "border": "#43277a",
+  "track": "#2e1a4d",
+  "text": "#f7e7ff",
+  "muted": "#a98bd6",
+  "accent": "#ff2e88",
+  "accentSoft": "#c026d3",
+  "good": "#00f5c4",
+  "bad": "#ff2e88",
+  "warn": "#ffd166",
+  "barColors": ["#ff2e88", "#00f5c4", "#7c3aed", "#ffd166", "#f472b6", "#22d3ee", "#a78bfa", "#f7e7ff"],
+  "pattern": "grid",
+  "shape": "rounded",
+  "glow": true
+}

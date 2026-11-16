@@ -1,0 +1,6 @@
+{
+  "$comment": "A command-line tool: releases and merged PRs are the real score, stars come in bursts after a HN post.",
+  "theme": "terminal",
+  "rivals": { "fallbackTopics": ["cli", "command-line-tool", "developer-tools"], "clusterSize": 12, "searchPerTopic": 10 },
+  "points": { "commit": 2, "merge": 12, "star": 4, "fork": 8, "release": 40 }
+}

@@ -1,0 +1,73 @@
+name: RivalMode scoreboard
+
+# Hourly: pull the repo's own numbers, redraw the cards, commit the README back.
+# This is the job that makes the README feel alive.
+
+on:
+  schedule:
+    # GitHub queues scheduled jobs on a best-effort basis; :07 avoids the top-of-hour rush.
+    - cron: '7 * * * *'
+  push:
+    branches: ['**']
+  workflow_dispatch:
+  # Allow a manual run from the Actions UI or via `gh workflow run`.
+
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+
+concurrency:
+  group: rivalmode-scoreboard
+  cancel-in-progress: true
+
+jobs:
+  scoreboard:
+    runs-on: ubuntu-latest
+    # Skip the pointless run triggered by RivalMode's own bot commit.
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history is not needed; but we do want the bot's previous state.
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Render scoreboard
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RIVALMODE_REPO: ${{ github.repository }}
+        run: node src/cli.mjs scoreboard
+
+      - name: Commit
+        id: commit
+        run: |
+          set -euo pipefail
+          git config user.name "rivalmode[bot]"
+          git config user.email "rivalmode[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "nothing to commit — the scoreboard is already current"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add -A assets/rivalmode README.md .rivalmode/state || git add -A
+          git commit -m "chore(rivalmode): hourly scoreboard [skip ci]"
+          # Rebase against any push that landed while we were rendering.
+          for attempt in 1 2 3; do
+            if git push; then break; fi
+            echo "push rejected, rebasing (attempt $attempt)"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### RivalMode scoreboard" >> "$GITHUB_STEP_SUMMARY"
+          echo "Updated at $(date -u +%FT%TZ) for \`${GITHUB_REPOSITORY}\`." >> "$GITHUB_STEP_SUMMARY"

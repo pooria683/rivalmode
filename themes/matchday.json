@@ -1,0 +1,20 @@
+{
+  "name": "matchday",
+  "label": "Matchday",
+  "dark": true,
+  "background": "#0b1e14",
+  "panel": "#10281c",
+  "border": "#1e4d33",
+  "track": "#153324",
+  "text": "#f2fff7",
+  "muted": "#84b39b",
+  "accent": "#f5c518",
+  "accentSoft": "#e0a800",
+  "good": "#00d96f",
+  "bad": "#ff4d4d",
+  "warn": "#f5c518",
+  "barColors": ["#f5c518", "#00d96f", "#58a6ff", "#ff9f1c", "#ff6b6b", "#70e1f5", "#c0f57a", "#f2fff7"],
+  "pattern": "pitch",
+  "shape": "sharp",
+  "glow": false
+}
