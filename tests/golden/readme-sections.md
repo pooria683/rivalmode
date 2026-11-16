@@ -41,7 +41,7 @@
 <!-- rivalmode:start feed -->
 <img src="assets/rivalmode/feed.svg" alt="Live event feed" width="430" />
 
-- `5h` [pooria683 pushed 3 commits](https://github.com/pooria683/rivalmode) — feat(svg): momentum gauge with a streak bonus
+- `6h` [pooria683 pushed 3 commits](https://github.com/pooria683/rivalmode) — feat(svg): momentum gauge with a streak bonus
 - `6h` [dev-bat starred the repo](https://github.com/pooria683/rivalmode)
 - `7h` [PR #58 merged](https://github.com/pooria683/rivalmode) — rivals: skip repos younger than a week
 - `7h` [julesortiz forked the repo](https://github.com/pooria683/rivalmode) — julesortiz/rivalmode

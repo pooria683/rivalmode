@@ -2,7 +2,7 @@ name: RivalMode rivals
 
 # Daily: scan forks, topic-neighbours and fans, re-rank the cluster, and redraw
 # the ladder. Deliberately separate from the hourly job so the expensive search
-# calls (and the ETag cache churn) happen once a day.
+# calls happen once a day.
 
 on:
   schedule:
@@ -15,7 +15,7 @@ permissions:
   issues: read
 
 concurrency:
-  group: rivalmode-rivals
+  group: rivalmode-publish
   cancel-in-progress: false
 
 jobs:
@@ -33,32 +33,20 @@ jobs:
         with:
           node-version: 20
 
-      - name: Rank the cluster
+      - name: Rank the cluster and publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RIVALMODE_REPO: ${{ github.repository }}
-        run: node src/cli.mjs rivals
-
-      - name: Commit
         run: |
           set -euo pipefail
           git config user.name "rivalmode[bot]"
           git config user.email "rivalmode[bot]@users.noreply.github.com"
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "rival ladder unchanged"
-            exit 0
-          fi
-          git add -A
-          git commit -m "chore(rivalmode): daily rival scan [skip ci]"
-          for attempt in 1 2 3; do
-            if git push; then break; fi
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-          done
+          tools/publish.sh "chore(rivalmode): daily rival scan [skip ci]" node src/cli.mjs rivals
 
-      - name: Roast on rank loss
-        if: success()
+      - name: Summary
+        if: always()
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # The launch hook: when a rival passes us, say so out loud.
           node -e '
@@ -67,28 +55,35 @@ jobs:
             if (!fs.existsSync(p)) process.exit(0);
             const state = JSON.parse(fs.readFileSync(p, "utf8"));
             const changes = state.ranking && state.ranking.changes;
-            if (!changes || !changes.passedBy || !changes.passedBy.length) process.exit(0);
-            const names = changes.passedBy.map((c) => "`" + c.slug + "`").join(", ");
-            const body = [
-              "### ⚔️ A rival just passed this repo",
-              "",
-              names + " moved ahead of `" + process.env.RIVALMODE_REPO + "` on the star-velocity ladder.",
-              "",
-              "| | |",
-              "|:--|:--|",
-              "| New rank | **#" + state.ranking.rank + " of " + state.ranking.clusterSize + "** |",
-              "| Passed by | " + names + " |",
-              "| Detected | " + new Date().toISOString() + " |",
-              "",
-              "The ladder is in the README. Go and take it back.",
-            ].join("\n");
-            fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY || "/dev/stderr", body);
-            fs.writeFileSync("/tmp/roast.md", body);
+            const lines = ["### RivalMode rival scan", ""];
+            lines.push(`Rank: **#${state.ranking?.rank ?? "?"} of ${state.ranking?.clusterSize ?? "?"}**`);
+            if (changes && changes.passedBy && changes.passedBy.length) {
+              lines.push("", "#### ⚔️ A rival just passed this repo");
+              for (const c of changes.passedBy) lines.push(`- \`${c.slug}\` moved ahead`);
+              lines.push("", "The ladder is in the README. Go and take it back.");
+            }
+            if (changes && changes.passed && changes.passed.length) {
+              lines.push("", "#### ✅ You passed");
+              for (const c of changes.passed) lines.push(`- \`${c.slug}\``);
+            }
+            const body = lines.join("\n");
+            fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY || "/dev/stderr", body + "\n");
+            fs.writeFileSync("roast.md", body + "\n");
           '
-          gh issue comment "${{ github.event.issue.number || 0 }}" --body-file /tmp/roast.md 2>/dev/null || echo "no issue to comment on — posted to the run summary instead"
 
-      - name: Summary
-        if: always()
+      - name: Post the roast to the recap issue
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "### RivalMode rival scan" >> "$GITHUB_STEP_SUMMARY"
-          cat .rivalmode/state/rivals.json 2>/dev/null | head -40 >> "$GITHUB_STEP_SUMMARY" || true
+          set -euo pipefail
+          # Only speak up when something actually changed.
+          grep -q "just passed this repo" roast.md || { echo "no rank loss — staying quiet"; exit 0; }
+          TITLE="⚔️ RivalMode weekly recaps"
+          ISSUE=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+          if [ -n "${ISSUE:-}" ]; then
+            gh issue comment "$ISSUE" --body-file roast.md
+            echo "posted to #$ISSUE" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "no recap issue yet — the roast is in this run's summary" >> "$GITHUB_STEP_SUMMARY"
+          fi

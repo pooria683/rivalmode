@@ -10,16 +10,18 @@ on:
   push:
     branches: ['**']
   workflow_dispatch:
-  # Allow a manual run from the Actions UI or via `gh workflow run`.
 
 permissions:
   contents: write
   pull-requests: read
   issues: read
 
+# One publish at a time. The daily rival scan and this job both write the
+# README, so they serialise rather than race (see tools/publish.sh for the
+# retry path if they ever do overlap).
 concurrency:
-  group: rivalmode-scoreboard
-  cancel-in-progress: true
+  group: rivalmode-publish
+  cancel-in-progress: false
 
 jobs:
   scoreboard:
@@ -30,7 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # Full history is not needed; but we do want the bot's previous state.
           fetch-depth: 1
           persist-credentials: true
 
@@ -39,35 +40,18 @@ jobs:
         with:
           node-version: 20
 
-      - name: Render scoreboard
+      - name: Render and publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RIVALMODE_REPO: ${{ github.repository }}
-        run: node src/cli.mjs scoreboard
-
-      - name: Commit
-        id: commit
         run: |
           set -euo pipefail
           git config user.name "rivalmode[bot]"
           git config user.email "rivalmode[bot]@users.noreply.github.com"
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "nothing to commit — the scoreboard is already current"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          git add -A assets/rivalmode README.md .rivalmode/state || git add -A
-          git commit -m "chore(rivalmode): hourly scoreboard [skip ci]"
-          # Rebase against any push that landed while we were rendering.
-          for attempt in 1 2 3; do
-            if git push; then break; fi
-            echo "push rejected, rebasing (attempt $attempt)"
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-          done
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+          tools/publish.sh "chore(rivalmode): hourly scoreboard [skip ci]" node src/cli.mjs scoreboard
 
       - name: Summary
         if: always()
         run: |
           echo "### RivalMode scoreboard" >> "$GITHUB_STEP_SUMMARY"
-          echo "Updated at $(date -u +%FT%TZ) for \`${GITHUB_REPOSITORY}\`." >> "$GITHUB_STEP_SUMMARY"
+          echo "Ran at $(date -u +%FT%TZ) for \`${GITHUB_REPOSITORY}\`." >> "$GITHUB_STEP_SUMMARY"

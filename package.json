@@ -1,7 +1,7 @@
 {
   "name": "rivalmode",
   "version": "1.0.0",
-  "description": "Gamify any GitHub repo: a live scoreboard, rival tracking and a weekly roast — rendered inside your own README by Actions.",
+  "description": "Gamify any GitHub repo: a live scoreboard, rival tracking and a weekly roast \u2014 rendered inside your own README by Actions.",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -17,9 +17,9 @@
     "recap": "node src/cli.mjs recap",
     "setup": "node src/cli.mjs setup",
     "uninstall": "node src/cli.mjs uninstall",
-    "test": "node --test \"tests/*.test.mjs\"",
+    "test": "node tools/test.mjs",
     "demo": "node tools/make-demo-gif.mjs",
-    "test:watch": "node --test --watch \"tests/*.test.mjs\""
+    "test:watch": "node --test --watch tests/score.test.mjs"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

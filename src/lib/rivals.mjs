@@ -99,6 +99,8 @@ export async function discoverRivals(client, snapshot, config, { log = createLog
   result.fans = fans;
   result.ranking = rankCluster({ self, rivals: candidates, limits: settings });
 
+  // Diff first, mutate second: diffRanking reads `current.entries`, and adding
+  // `changes` before that would corrupt the comparison.
   const changes = diffRanking(result.ranking, previous?.ranking ?? previous ?? null);
   if (previous?.history) {
     result.history = [...previous.history, { at: result.generatedAt, rank: result.ranking.rank, clusterSize: result.ranking.clusterSize }].slice(-90);
@@ -109,6 +111,7 @@ export async function discoverRivals(client, snapshot, config, { log = createLog
   }
 
   result.ranking.changes = changes;
+  result.changes = changes;
   result.summary = {
     rivals: candidates.length,
     rank: result.ranking.rank,
@@ -422,6 +425,7 @@ export function compactForState(result) {
           rank: result.ranking.rank,
           clusterSize: result.ranking.clusterSize,
           percentile: result.ranking.percentile,
+          changes: result.ranking.changes ?? { delta: null, passed: [], passedBy: [], entered: [], left: [] },
           entries: result.ranking.entries.map((e) => ({ slug: e.slug, rank: e.rank, stars: e.stars, velocity: e.velocity, isSelf: e.isSelf })),
         }
       : null,

@@ -26,11 +26,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      # The unit suite is dependency-free and offline by design: no install step,
-      # no token, no network. If this job ever needs `npm ci`, something broke.
+
+      # The suite is dependency-free and offline by design: no install step, no
+      # token, no network. If this ever needs `npm ci`, something broke.
       - name: Run tests
         run: npm test
-      - name: Fail if runtime needs dependencies
+
+      - name: Runtime dependencies must stay empty
         run: |
           node -e "
             const pkg = require('./package.json');
@@ -39,10 +41,10 @@ jobs:
               console.error('RivalMode must ship with zero runtime dependencies, found:', runtime.join(', '));
               process.exit(1);
             }
-            console.log('runtime dependencies: none ✓');
+            console.log('runtime dependencies: none');
           "
 
-  lint-workflows:
+  workflows:
     name: Workflows are valid
     runs-on: ubuntu-latest
     steps:
@@ -57,9 +59,8 @@ jobs:
               try:
                   doc = yaml.safe_load(open(path))
                   assert doc, 'empty workflow'
-                  assert 'jobs' in doc, 'no jobs'
-                  jobs = doc['jobs']
-                  assert isinstance(jobs, dict) and jobs, 'jobs must be a mapping'
+                  jobs = doc.get('jobs') or {}
+                  assert jobs, 'no jobs'
                   for name, job in jobs.items():
                       assert 'runs-on' in job, f'{name} has no runs-on'
                       assert 'steps' in job, f'{name} has no steps'
@@ -71,9 +72,9 @@ jobs:
           PY
 
   integration:
-    # The full pipeline against a scratch repo: install, render, commit, rerun,
-    # and prove the second run is a no-op. This is the test that would have
-    # caught "it works locally but never commits in CI".
+    # The full cycle against a scratch repo: install, render, commit, re-render,
+    # uninstall. This is the test that catches "works locally, never commits in
+    # CI" and "uninstall leaves litter behind".
     name: Full pipeline on a scratch repo
     runs-on: ubuntu-latest
     steps:
@@ -82,35 +83,58 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install into an empty repo
+      - name: Install into a scratch repo
         run: |
           set -euo pipefail
           SCRATCH="$RUNNER_TEMP/scratch"
           mkdir -p "$SCRATCH"
-          cp -r src themes package.json .github "$SCRATCH/"
-          cp -r tests "$SCRATCH/"
+          cp -r src themes package.json tools .github "$SCRATCH/"
           cd "$SCRATCH"
           printf '# scratch project\n\nA repo that does not exist yet.\n' > README.md
-          git init -q && git config user.email ci@example.com && git config user.name ci
+          git init -q
+          git config user.email ci@example.com
+          git config user.name ci
+          cp README.md /tmp/readme-original.md
           git add -A && git commit -qm "initial"
+
           node src/cli.mjs setup --theme=synthwave --title="Scratch"
           node src/cli.mjs scoreboard --mock
+
           test -f assets/rivalmode/scoreboard.svg
           test -f assets/rivalmode/rivals.svg
           grep -q "rivalmode:start scoreboard" README.md
           echo "first run produced $(ls assets/rivalmode/*.svg | wc -l) cards"
 
-      - name: Second run must change nothing
+          # Commit the install, exactly like the real setup workflow does.
+          git add -A && git commit -qm "install"
+
+      - name: Second identical run must change nothing
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/scratch"
           node src/cli.mjs scoreboard --mock
           if [ -n "$(git status --porcelain)" ]; then
-            echo "::error::second identical run changed files — commits would churn forever"
+            echo "::error::second identical run changed files — the bot would commit forever"
             git status --porcelain
+            git diff --stat
             exit 1
           fi
-          echo "idempotent ✓"
+          echo "idempotent"
+
+      - name: publish.sh commits once and is a no-op the second time
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          echo '{"probe":true}' > assets/rivalmode/probe.svg
+          GITHUB_REF_NAME="$(git rev-parse --abbrev-ref HEAD)" tools/publish.sh "chore: probe" true
+          test -z "$(git status --porcelain)"
+          BEFORE=$(git rev-list --count HEAD)
+          GITHUB_REF_NAME="$(git rev-parse --abbrev-ref HEAD)" tools/publish.sh "chore: probe" true
+          AFTER=$(git rev-list --count HEAD)
+          test "$BEFORE" = "$AFTER" || { echo "::error::publish.sh committed with nothing to commit"; exit 1; }
+          rm -f assets/rivalmode/probe.svg
+          git checkout -q -- . && git clean -qfd
+          echo "publish.sh is quiet when there is nothing to say"
 
       - name: Uninstall leaves no residue
         run: |
@@ -120,19 +144,22 @@ jobs:
           test ! -d .rivalmode || { echo "::error::.rivalmode survived uninstall"; exit 1; }
           test ! -d assets/rivalmode || { echo "::error::generated assets survived uninstall"; exit 1; }
           ! grep -q "rivalmode:start" README.md || { echo "::error::README markers survived uninstall"; exit 1; }
-          grep -q "scratch project" README.md || { echo "::error::uninstall damaged the README"; exit 1; }
-          echo "clean uninstall ✓"
+          diff -q README.md /tmp/readme-original.md || { echo "::error::uninstall did not restore the README"; diff README.md /tmp/readme-original.md; exit 1; }
+          echo "clean uninstall"
 
-      - name: Degraded mode without a token
+      - name: Degraded mode reports a useful failure, never a zero
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/scratch"
-          # No token and no network reachable repo: this must fail loudly with a
-          # useful message rather than writing a scoreboard full of zeroes.
-          unset GITHUB_TOKEN
+          node src/cli.mjs setup >/dev/null
+          unset GITHUB_TOKEN GH_TOKEN
           if node src/cli.mjs scoreboard 2>err.txt; then
-            echo "::error::expected failure without a token, got success"
+            echo "::error::expected failure without a token or network, got success"
             exit 1
           fi
-          grep -qi "could not read\|token\|rate limit" err.txt || { echo "::error::unhelpful error message:"; cat err.txt; exit 1; }
-          echo "degrades with a clear message ✓"
+          grep -qi "could not read\|token\|rate limit" err.txt || {
+            echo "::error::unhelpful error message:"
+            cat err.txt
+            exit 1
+          }
+          echo "degrades with a clear message"

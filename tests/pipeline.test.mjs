@@ -162,11 +162,22 @@ test('rank changes are detected between two runs', async () => {
   const log = createLog(true);
   const snapshot = await collectSnapshot(client, SLUG, CONFIG, { log, now: NOW });
   const first = await discoverRivals(client, snapshot, CONFIG, { log, now: NOW });
-  const previous = { ranking: { ...first.ranking, rank: 1 }, history: [] };
-  const second = await discoverRivals(client, snapshot, CONFIG, { log, now: NOW, previous: compactForState(first) });
-  assert.ok(second.ranking.changes);
+
+  // Rewrite history so the last run had us last: the diff must see us climbing.
+  const stored = compactForState(first);
+  stored.ranking.rank = stored.ranking.entries.length;
+  stored.ranking.entries = stored.ranking.entries.map((e) => ({
+    ...e,
+    rank: e.isSelf ? stored.ranking.entries.length : Math.max(1, e.rank),
+  }));
+  const second = await discoverRivals(client, snapshot, CONFIG, { log, now: NOW, previous: stored });
+
+  assert.ok(second.ranking.changes, 'changes are always present');
   assert.equal(typeof second.summary.passed, 'number');
-  void previous;
+  assert.equal(typeof second.summary.passedBy, 'number');
+  assert.ok(second.summary.passed >= 1, 'climbing the ladder is reported as passing rivals');
+  assert.ok(second.ranking.changes.passed.length >= 1);
+  assert.ok(compactForState(second).ranking.changes, 'changes survive compaction into the state file');
 });
 
 /* ---------------------------------------------------------------- github --- */
