@@ -2,6 +2,24 @@
   "schema": 1,
   "items": [
     {
+      "type": "PullRequestEvent",
+      "icon": "⇄",
+      "actor": "pooria683",
+      "avatar": "https://avatars.githubusercontent.com/u/319389177?",
+      "at": "2026-11-17T03:39:50Z",
+      "text": "PR #1 merged",
+      "detail": ""
+    },
+    {
+      "type": "PullRequestEvent",
+      "icon": "⇄",
+      "actor": "pooria683",
+      "avatar": "https://avatars.githubusercontent.com/u/319389177?",
+      "at": "2026-11-17T03:30:36Z",
+      "text": "PR #1 opened",
+      "detail": ""
+    },
+    {
       "type": "CreateEvent",
       "icon": "+",
       "actor": "arena-ai-coding-agent[bot]",
