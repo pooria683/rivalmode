@@ -1,0 +1,89 @@
+name: RivalMode rivals
+
+# Daily: scan forks, topic-neighbours and fans, re-rank the cluster, and redraw
+# the ladder. Deliberately separate from the hourly job so the expensive search
+# calls happen once a day.
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+
+concurrency:
+  group: rivalmode-publish
+  cancel-in-progress: false
+
+jobs:
+  rivals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Rank the cluster and publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RIVALMODE_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git config user.name "rivalmode[bot]"
+          git config user.email "rivalmode[bot]@users.noreply.github.com"
+          tools/publish.sh "chore(rivalmode): daily rival scan [skip ci]" node src/cli.mjs rivals
+
+      - name: Summary
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # The launch hook: when a rival passes us, say so out loud.
+          node -e '
+            const fs = require("fs");
+            const p = ".rivalmode/state/rivals.json";
+            if (!fs.existsSync(p)) process.exit(0);
+            const state = JSON.parse(fs.readFileSync(p, "utf8"));
+            const changes = state.ranking && state.ranking.changes;
+            const lines = ["### RivalMode rival scan", ""];
+            lines.push(`Rank: **#${state.ranking?.rank ?? "?"} of ${state.ranking?.clusterSize ?? "?"}**`);
+            if (changes && changes.passedBy && changes.passedBy.length) {
+              lines.push("", "#### ⚔️ A rival just passed this repo");
+              for (const c of changes.passedBy) lines.push(`- \`${c.slug}\` moved ahead`);
+              lines.push("", "The ladder is in the README. Go and take it back.");
+            }
+            if (changes && changes.passed && changes.passed.length) {
+              lines.push("", "#### ✅ You passed");
+              for (const c of changes.passed) lines.push(`- \`${c.slug}\``);
+            }
+            const body = lines.join("\n");
+            fs.writeFileSync(process.env.GITHUB_STEP_SUMMARY || "/dev/stderr", body + "\n");
+            fs.writeFileSync("roast.md", body + "\n");
+          '
+
+      - name: Post the roast to the recap issue
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Only speak up when something actually changed.
+          grep -q "just passed this repo" roast.md || { echo "no rank loss — staying quiet"; exit 0; }
+          TITLE="⚔️ RivalMode weekly recaps"
+          ISSUE=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+          if [ -n "${ISSUE:-}" ]; then
+            gh issue comment "$ISSUE" --body-file roast.md
+            echo "posted to #$ISSUE" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "no recap issue yet — the roast is in this run's summary" >> "$GITHUB_STEP_SUMMARY"
+          fi

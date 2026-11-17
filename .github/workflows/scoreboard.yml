@@ -1,0 +1,57 @@
+name: RivalMode scoreboard
+
+# Hourly: pull the repo's own numbers, redraw the cards, commit the README back.
+# This is the job that makes the README feel alive.
+
+on:
+  schedule:
+    # GitHub queues scheduled jobs on a best-effort basis; :07 avoids the top-of-hour rush.
+    - cron: '7 * * * *'
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+
+# One publish at a time. The daily rival scan and this job both write the
+# README, so they serialise rather than race (see tools/publish.sh for the
+# retry path if they ever do overlap).
+concurrency:
+  group: rivalmode-publish
+  cancel-in-progress: false
+
+jobs:
+  scoreboard:
+    runs-on: ubuntu-latest
+    # Skip the pointless run triggered by RivalMode's own bot commit.
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Render and publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RIVALMODE_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git config user.name "rivalmode[bot]"
+          git config user.email "rivalmode[bot]@users.noreply.github.com"
+          tools/publish.sh "chore(rivalmode): hourly scoreboard [skip ci]" node src/cli.mjs scoreboard
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### RivalMode scoreboard" >> "$GITHUB_STEP_SUMMARY"
+          echo "Ran at $(date -u +%FT%TZ) for \`${GITHUB_REPOSITORY}\`." >> "$GITHUB_STEP_SUMMARY"

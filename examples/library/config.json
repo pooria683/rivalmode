@@ -1,0 +1,6 @@
+{
+  "$comment": "A library or SDK: merges, closed issues and releases are the work; commits are a proxy for effort.",
+  "theme": "midnight",
+  "rivals": { "fallbackTopics": ["library", "sdk", "typescript"], "clusterSize": 12 },
+  "points": { "commit": 2, "merge": 14, "star": 5, "fork": 9, "release": 30, "issueClosed": 6 }
+}

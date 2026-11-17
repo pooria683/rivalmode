@@ -1,0 +1,20 @@
+{
+  "name": "midnight",
+  "label": "Midnight",
+  "dark": true,
+  "background": "#0d1117",
+  "panel": "#161b22",
+  "border": "#30363d",
+  "track": "#21262d",
+  "text": "#e6edf3",
+  "muted": "#8b949e",
+  "accent": "#58a6ff",
+  "accentSoft": "#1f6feb",
+  "good": "#3fb950",
+  "bad": "#f85149",
+  "warn": "#d29922",
+  "barColors": ["#58a6ff", "#3fb950", "#d29922", "#f778ba", "#a371f7", "#39c5cf", "#ff9e64", "#e6edf3"],
+  "pattern": "grid",
+  "shape": "rounded",
+  "glow": false
+}

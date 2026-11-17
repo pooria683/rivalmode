@@ -1,0 +1,6 @@
+{
+  "$comment": "An agent / skill / bot: ranks move fast, so shorten the daily window and let commits dominate.",
+  "theme": "matchday",
+  "rivals": { "fallbackTopics": ["ai", "llm", "agent", "automation"], "clusterSize": 15, "minAgeDays": 3 },
+  "points": { "commit": 3, "merge": 9, "star": 5, "fork": 6, "release": 20 }
+}

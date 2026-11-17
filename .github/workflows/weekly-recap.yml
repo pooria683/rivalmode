@@ -1,0 +1,56 @@
+name: RivalMode weekly recap
+
+# Mondays: a friendly week-in-review, posted as a comment on an open issue (or
+# opened as a fresh issue), plus a run summary. This is the shareable artefact.
+
+on:
+  schedule:
+    - cron: '11 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  recap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Build recap
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RIVALMODE_REPO: ${{ github.repository }}
+        run: node src/cli.mjs recap --out=tmp/recap.md
+
+      - name: Post it
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          cat tmp/recap.md >> "$GITHUB_STEP_SUMMARY"
+
+          # Prefer the pinned "RivalMode weekly recaps" issue; create one once.
+          TITLE="⚔️ RivalMode weekly recaps"
+          ISSUE=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -z "${ISSUE:-}" ]; then
+            ISSUE=$(gh issue create \
+              --title "$TITLE" \
+              --body "Weekly recaps from [RivalMode](https://github.com/pooria683/rivalmode). One comment per week — commits, top contributor, momentum, and what the rivals did." \
+              --label "" 2>/dev/null | grep -oE '[0-9]+$' || true)
+          fi
+          if [ -n "${ISSUE:-}" ]; then
+            gh issue comment "$ISSUE" --body-file tmp/recap.md
+            echo "posted recap to #$ISSUE" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "could not find or create a recap issue; the recap is in this run's summary" >> "$GITHUB_STEP_SUMMARY"
+          fi

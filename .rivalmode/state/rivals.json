@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-11-16T17:55:10.453Z",
+  "mode": "ranked",
+  "topicCluster": [
+    "github-actions",
+    "readme",
+    "developer-tools"
+  ],
+  "summary": {
+    "rivals": 12,
+    "rank": 1,
+    "clusterSize": 13,
+    "passed": 0,
+    "passedBy": 0,
+    "mode": "ranked"
+  },
+  "ranking": {
+    "rank": 1,
+    "clusterSize": 13,
+    "percentile": 100,
+    "entries": [
+      {
+        "slug": "pooria683/rivalmode",
+        "rank": 1,
+        "stars": 0,
+        "velocity": 0,
+        "isSelf": true
+      },
+      {
+        "slug": "IsDerky/homelab",
+        "rank": 2,
+        "stars": 1,
+        "velocity": 0.09,
+        "isSelf": false
+      },
+      {
+        "slug": "AhmedNavaz/codeshi",
+        "rank": 3,
+        "stars": 1,
+        "velocity": 0.06,
+        "isSelf": false
+      },
+      {
+        "slug": "ImJanindu/home-labs",
+        "rank": 4,
+        "stars": 1,
+        "velocity": 0.06,
+        "isSelf": false
+      },
+      {
+        "slug": "BarryPekerman/handover-hosting",
+        "rank": 5,
+        "stars": 1,
+        "velocity": 0.03,
+        "isSelf": false
+      },
+      {
+        "slug": "i2Dev-com/homefield",
+        "rank": 6,
+        "stars": 1,
+        "velocity": 0.02,
+        "isSelf": false
+      },
+      {
+        "slug": "Katta041/asitis-agent-tools",
+        "rank": 7,
+        "stars": 1,
+        "velocity": 0.02,
+        "isSelf": false
+      },
+      {
+        "slug": "aredwan-xyz/techpulse-daily",
+        "rank": 8,
+        "stars": 1,
+        "velocity": 0.01,
+        "isSelf": false
+      },
+      {
+        "slug": "Denisyoya/Proxy-List-Gamt",
+        "rank": 9,
+        "stars": 1,
+        "velocity": 0.01,
+        "isSelf": false
+      },
+      {
+        "slug": "iamRooney/contrib-blaster",
+        "rank": 10,
+        "stars": 1,
+        "velocity": 0.01,
+        "isSelf": false
+      },
+      {
+        "slug": "Jasmin319/GitHub-for-BI-Portfolio",
+        "rank": 11,
+        "stars": 1,
+        "velocity": 0,
+        "isSelf": false
+      },
+      {
+        "slug": "simonesugliano/ArtiTam-Gallery",
+        "rank": 12,
+        "stars": 1,
+        "velocity": 0,
+        "isSelf": false
+      },
+      {
+        "slug": "StorywithLove/envdata-sync",
+        "rank": 13,
+        "stars": 1,
+        "velocity": 0,
+        "isSelf": false
+      }
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-16T17:51:56.140Z",
+      "rank": 1,
+      "clusterSize": 1
+    },
+    {
+      "at": "2026-11-16T17:51:59.354Z",
+      "rank": 1,
+      "clusterSize": 13
+    },
+    {
+      "at": "2026-11-16T17:53:34.613Z",
+      "rank": 1,
+      "clusterSize": 13
+    },
+    {
+      "at": "2026-11-16T17:55:10.453Z",
+      "rank": 1,
+      "clusterSize": 13
+    }
+  ],
+  "rivals": [
+    {
+      "slug": "AhmedNavaz/codeshi",
+      "stars": 1,
+      "velocity": 0.06,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "simonesugliano/ArtiTam-Gallery",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "BarryPekerman/handover-hosting",
+      "stars": 1,
+      "velocity": 0.03,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "i2Dev-com/homefield",
+      "stars": 1,
+      "velocity": 0.02,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "StorywithLove/envdata-sync",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "iamRooney/contrib-blaster",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "Katta041/asitis-agent-tools",
+      "stars": 1,
+      "velocity": 0.02,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "IsDerky/homelab",
+      "stars": 1,
+      "velocity": 0.09,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "ImJanindu/home-labs",
+      "stars": 1,
+      "velocity": 0.06,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "Denisyoya/Proxy-List-Gamt",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "aredwan-xyz/techpulse-daily",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "Jasmin319/GitHub-for-BI-Portfolio",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    }
+  ],
+  "fans": [],
+  "forks": [],
+  "warnings": [
+    "star velocity AhmedNavaz/codeshi: GitHub rate limit reached — showing last known numbers",
+    "star velocity simonesugliano/ArtiTam-Gallery: GitHub rate limit reached — showing last known numbers",
+    "star velocity BarryPekerman/handover-hosting: GitHub rate limit reached — showing last known numbers",
+    "star velocity i2Dev-com/homefield: GitHub rate limit reached — showing last known numbers",
+    "star velocity StorywithLove/envdata-sync: GitHub rate limit reached — showing last known numbers",
+    "star velocity iamRooney/contrib-blaster: GitHub rate limit reached — showing last known numbers",
+    "star velocity Katta041/asitis-agent-tools: GitHub rate limit reached — showing last known numbers",
+    "star velocity IsDerky/homelab: GitHub rate limit reached — showing last known numbers",
+    "star velocity ImJanindu/home-labs: GitHub rate limit reached — showing last known numbers",
+    "star velocity Denisyoya/Proxy-List-Gamt: GitHub rate limit reached — showing last known numbers"
+  ]
+}

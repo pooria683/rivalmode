@@ -1,0 +1,20 @@
+{
+  "name": "paper",
+  "label": "Paper",
+  "dark": false,
+  "background": "#fffdf7",
+  "panel": "#f4f1e8",
+  "border": "#dcd6c4",
+  "track": "#e8e3d5",
+  "text": "#1f1d1a",
+  "muted": "#7a7468",
+  "accent": "#b45309",
+  "accentSoft": "#d97706",
+  "good": "#15803d",
+  "bad": "#b91c1c",
+  "warn": "#a16207",
+  "barColors": ["#b45309", "#15803d", "#1d4ed8", "#be185d", "#7c3aed", "#0f766e", "#c2410c", "#1f1d1a"],
+  "pattern": "none",
+  "shape": "rounded",
+  "glow": false
+}

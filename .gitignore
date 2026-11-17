@@ -1,0 +1,12 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+*.local
+.env
+.env.*
+!.env.example
+coverage/
+tmp/
+tools/.frames/
+.rivalmode/state/api-cache.json
+.rivalmode/state/.gitkeep

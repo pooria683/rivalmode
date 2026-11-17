@@ -1,0 +1,175 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Tests (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+
+      # The suite is dependency-free and offline by design: no install step, no
+      # token, no network. If this ever needs `npm ci`, something broke.
+      - name: Run tests
+        run: npm test
+
+      - name: Runtime dependencies must stay empty
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            const runtime = Object.keys(pkg.dependencies || {});
+            if (runtime.length) {
+              console.error('RivalMode must ship with zero runtime dependencies, found:', runtime.join(', '));
+              process.exit(1);
+            }
+            console.log('runtime dependencies: none');
+          "
+
+  workflows:
+    name: Workflows are valid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Parse every workflow as YAML
+        run: |
+          pip install --quiet pyyaml
+          python3 - <<'PY'
+          import glob, sys, yaml
+          ok = True
+          for path in sorted(glob.glob('.github/workflows/*.yml')):
+              try:
+                  doc = yaml.safe_load(open(path))
+                  assert doc, 'empty workflow'
+                  jobs = doc.get('jobs') or {}
+                  assert jobs, 'no jobs'
+                  for name, job in jobs.items():
+                      assert 'runs-on' in job, f'{name} has no runs-on'
+                      assert 'steps' in job, f'{name} has no steps'
+                  print(f'ok   {path} ({len(jobs)} job(s))')
+              except Exception as err:
+                  ok = False
+                  print(f'FAIL {path}: {err}')
+          sys.exit(0 if ok else 1)
+          PY
+
+  integration:
+    # The full cycle against a scratch repo: install, render, commit, re-render,
+    # uninstall. This is the test that catches "works locally, never commits in
+    # CI" and "uninstall leaves litter behind".
+    name: Full pipeline on a scratch repo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Install into a scratch repo
+        run: |
+          set -euo pipefail
+          SCRATCH="$RUNNER_TEMP/scratch"
+          mkdir -p "$SCRATCH"
+          cp -r src themes package.json tools .github "$SCRATCH/"
+          cd "$SCRATCH"
+          printf '# scratch project\n\nA repo that does not exist yet.\n' > README.md
+          git init -q
+          git config user.email ci@example.com
+          git config user.name ci
+          cp README.md /tmp/readme-original.md
+          git add -A && git commit -qm "initial"
+
+          node src/cli.mjs setup --theme=synthwave --title="Scratch"
+          node src/cli.mjs scoreboard --mock
+
+          test -f assets/rivalmode/scoreboard.svg
+          test -f assets/rivalmode/rivals.svg
+          grep -q "rivalmode:start scoreboard" README.md
+          echo "first run produced $(ls assets/rivalmode/*.svg | wc -l) cards"
+
+          # Commit the install, exactly like the real setup workflow does.
+          git add -A && git commit -qm "install"
+
+      - name: Second identical run must change nothing
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          node src/cli.mjs scoreboard --mock
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::second identical run changed files — the bot would commit forever"
+            git status --porcelain
+            git diff --stat
+            exit 1
+          fi
+          echo "idempotent"
+
+      - name: publish.sh commits once and is a no-op the second time
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          echo '{"probe":true}' > assets/rivalmode/probe.svg
+          GITHUB_REF_NAME="$(git rev-parse --abbrev-ref HEAD)" tools/publish.sh "chore: probe" true
+          test -z "$(git status --porcelain)"
+          BEFORE=$(git rev-list --count HEAD)
+          GITHUB_REF_NAME="$(git rev-parse --abbrev-ref HEAD)" tools/publish.sh "chore: probe" true
+          AFTER=$(git rev-list --count HEAD)
+          test "$BEFORE" = "$AFTER" || { echo "::error::publish.sh committed with nothing to commit"; exit 1; }
+          rm -f assets/rivalmode/probe.svg
+          git checkout -q -- . && git clean -qfd
+          echo "publish.sh is quiet when there is nothing to say"
+
+      - name: Uninstall leaves no residue
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          node src/cli.mjs uninstall
+          test ! -d .rivalmode || { echo "::error::.rivalmode survived uninstall"; exit 1; }
+          test ! -d assets/rivalmode || { echo "::error::generated assets survived uninstall"; exit 1; }
+          ! grep -q "rivalmode:start" README.md || { echo "::error::README markers survived uninstall"; exit 1; }
+          diff -q README.md /tmp/readme-original.md || { echo "::error::uninstall did not restore the README"; diff README.md /tmp/readme-original.md; exit 1; }
+          echo "clean uninstall"
+
+      - name: Failure modes are loud and specific, never a silent zero
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/scratch"
+          node src/cli.mjs setup >/dev/null
+          unset GITHUB_TOKEN GH_TOKEN
+
+          # 1. A repo we cannot read must fail with a message naming the causes,
+          #    and must not leave a scoreboard full of zeroes behind.
+          if env -u RIVALMODE_REPO GITHUB_REPOSITORY="rivalmode-ci/nonexistent-repo" node src/cli.mjs scoreboard 2>err.txt; then
+            echo "::error::expected failure for an unreadable repo, got success"
+            exit 1
+          fi
+          grep -q "could not read" err.txt || { echo "::error::message does not say what happened:"; cat err.txt; exit 1; }
+          grep -qi "token" err.txt || { echo "::error::message does not mention the token:"; cat err.txt; exit 1; }
+          echo "unreadable repo: $(grep -o 'RivalMode could not read[^.]*' err.txt | head -1)"
+
+          # 2. A repo it cannot even name must fail immediately, not half-render.
+          #    GITHUB_REPOSITORY is set in CI, so clear it: this case is exactly
+          #    "someone runs the CLI outside Actions with nothing configured".
+          if env -u GITHUB_REPOSITORY -u RIVALMODE_REPO node src/cli.mjs scoreboard --root="$RUNNER_TEMP/empty" 2>err2.txt; then
+            echo "::error::expected failure with no repo configured, got success"
+            exit 1
+          fi
+          grep -qi "could not work out which repo" err2.txt || { echo "::error::unhelpful message:"; cat err2.txt; exit 1; }
+          echo "missing repo: clear message"
