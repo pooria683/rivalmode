@@ -12,6 +12,7 @@ import {
   writeReadme,
   markerStart,
   splitFences,
+  footerSection,
 } from '../src/render_readme.mjs';
 import { makeSnapshot, makeRivals, makeMomentum } from '../src/lib/mock.mjs';
 import { DEFAULT_CONFIG } from '../src/lib/config.mjs';
@@ -175,6 +176,15 @@ test('splitFences round-trips a document unchanged', () => {
   assert.equal(rejoined, doc);
   const fenced = splitFences(doc).filter((s) => s.fenced);
   assert.equal(fenced.length, 2);
+});
+
+test('the footer timestamp is hour-precision so hourly runs stay idempotent', () => {
+  const early = footerSection({ snapshot: { generatedAt: '2026-11-17T03:01:00.000Z', repo: { owner: 'a', name: 'b' } }, config: { theme: 't' } });
+  const late = footerSection({ snapshot: { generatedAt: '2026-11-17T03:58:59.000Z', repo: { owner: 'a', name: 'b' } }, config: { theme: 't' } });
+  assert.equal(early, late, 'two runs in the same hour must render identical bytes');
+  assert.ok(early.includes('03:00 UTC'));
+  const nextHour = footerSection({ snapshot: { generatedAt: '2026-11-17T04:02:00.000Z', repo: { owner: 'a', name: 'b' } }, config: { theme: 't' } });
+  assert.notEqual(early, nextHour);
 });
 
 test('uninstall restores a README that setup scaffolded', () => {

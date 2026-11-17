@@ -20,6 +20,7 @@ import { listThemes } from './lib/theme.mjs';
 import { buildRecap, recapMarkdown } from './recap.mjs';
 import { setupRepo, uninstallRepo } from './setup.mjs';
 import { STATE_FILES, readState } from './lib/state.mjs';
+import { nowMs } from './lib/dates.mjs';
 
 const argv = process.argv.slice(2);
 const command = (argv.find((a) => !a.startsWith('-')) || 'help').toLowerCase();
@@ -63,11 +64,11 @@ async function runPipeline(root) {
   const config = loadConfig(root);
   if (flags.get('theme')) config.theme = flags.get('theme');
 
-  const started = Date.now();
+  const started = nowMs();
   const result = await run({
     root,
     config,
-    now: Date.now(),
+    now: nowMs(),
     log,
     write: !flags.has('no-write'),
     mock: flags.has('mock'),
@@ -148,7 +149,7 @@ async function runRecap(root) {
     history: momentumState.history || [],
     feed: feedState.items || [],
     config,
-    now: Date.now(),
+    now: nowMs(),
   });
   const markdown = recapMarkdown(recap, { config, snapshot: result.snapshot });
 

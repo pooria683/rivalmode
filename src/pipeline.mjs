@@ -19,7 +19,7 @@ import { buildSections, writeReadme } from './render_readme.mjs';
 import { loadConfig, parseRepoSlug, detectRepo, stateDir } from './lib/config.mjs';
 import { STATE_FILES, appendMomentumHistory, mergeFeed, readState, statePath, writeState, writeIfChanged } from './lib/state.mjs';
 import { makeSnapshot, makeRivals, makeMomentum } from './lib/mock.mjs';
-import { dayKey } from './lib/dates.mjs';
+import { dayKey, nowMs } from './lib/dates.mjs';
 import { warningsFor } from './lib/warnings.mjs';
 
 export function makeClient(config, root = '.', { token, log = console, logger = null } = {}) {
@@ -71,7 +71,7 @@ export async function run({
   config: configOverride = null,
   slug = null,
   client = null,
-  now = Date.now(),
+  now = nowMs(),
   log = createLog(),
   write = true,
   mock = false,

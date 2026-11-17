@@ -204,7 +204,11 @@ export function conquestsSection({ snapshot, points }) {
 }
 
 export function footerSection({ snapshot, config }) {
-  const at = new Date(snapshot.generatedAt).toISOString().replace('T', ' ').slice(0, 16);
+  // Round down to the hour. A minute-precision timestamp would rewrite the
+  // README on every run and turn an hourly schedule into 60 commits a day.
+  const stamp = new Date(snapshot.generatedAt);
+  stamp.setUTCMinutes(0, 0, 0);
+  const at = `${stamp.toISOString().replace('T', ' ').slice(0, 13)}:00`;
   return (
     `<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme \`${config.theme}\` · generated ${at} UTC · ` +
     `${snapshot.repo.owner}/${snapshot.repo.name} · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>`
