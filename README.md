@@ -138,10 +138,10 @@ in `.github/workflows/`, hourly and daily.
 
 **You are #1 of 13 in your topic cluster.** ⚠️ `davidackerman/still-life` is gaining faster than you (0.1★/day vs 0). Hold the line.
 
-**Momentum +100** ▲ on fire · 25 commits this week vs 0 last week · 2-day streak (+6)
+**Momentum +100** ▲ on fire · 26 commits this week vs 0 last week · 2-day streak (+6)
 
 > [!NOTE]
-> Some numbers are stale this run — rival star velocity is estimated (some lookups were skipped)
+> Some numbers are stale this run — rival ladder cached from the last daily run
 
 <sub>updated just now · every number comes from the GitHub API, nothing is hand-edited</sub>
 <!-- rivalmode:end scoreboard -->
@@ -169,9 +169,9 @@ in `.github/workflows/`, hourly and daily.
 <!-- rivalmode:start feed -->
 <img src="assets/rivalmode/feed.svg" alt="Live event feed" width="430" />
 
-- `12h` PR #1 merged
-- `12h` PR #1 opened
-- `22h` [arena-ai-coding-agent\[bot\] created branch main](https://github.com/undefined)
+- `18h` PR #1 merged
+- `18h` PR #1 opened
+- `1d` [arena-ai-coding-agent\[bot\] created branch main](https://github.com/undefined)
 <!-- rivalmode:end feed -->
 
 </td></tr></table>
@@ -333,5 +333,5 @@ re-render (must be a no-op) → uninstall (must restore the README byte for byte
 one place above you.</sub>
 
 <!-- rivalmode:start footer -->
-<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 16:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
+<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 22:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
 <!-- rivalmode:end footer -->
