@@ -1,4 +1,15 @@
 {
   "schema": 1,
-  "items": []
+  "items": [
+    {
+      "type": "CreateEvent",
+      "icon": "+",
+      "actor": "arena-ai-coding-agent[bot]",
+      "avatar": "https://avatars.githubusercontent.com/u/298482267?",
+      "at": "2026-11-16T17:34:19Z",
+      "text": "arena-ai-coding-agent[bot] created branch main",
+      "detail": "",
+      "url": "https://github.com/undefined"
+    }
+  ]
 }
