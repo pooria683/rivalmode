@@ -17,15 +17,27 @@ rival overtakes and the README tells you about it.</sub>
 ## Quick start
 
 1. Click **Use this template** (or fork).
-2. That's it.
+2. Add at least one topic to your repo (`Settings → Topics`, or the ⚙️ next to
+   *About* on the repo page).
+3. That's it.
 
 The `RivalMode scoreboard` workflow runs on your first push, renders the cards,
 writes them into `assets/rivalmode/`, commits the result as
 `rivalmode[bot]`, and your README has a live scoreboard. It costs nothing and
 needs no setup — the workflow ships with the template.
 
-Add topics to your repo (`Settings → Topics`). Topics are what put you in a
-cluster, and the cluster is the game.
+**Why topics matter:** they are what puts you in a cluster, and the cluster is
+the game. Without one, RivalMode still tracks every number of your own, but there
+is no ladder to climb — the card says so rather than inventing a rank. If you'd
+rather not set a topic, list fallback topics in `.rivalmode/config.json` and it
+will use those instead:
+
+```json
+{ "rivals": { "fallbackTopics": ["cli", "developer-tools"] } }
+```
+
+Check your setup any time with `node src/cli.mjs doctor` — it verifies the token,
+repo access, topics and theme in one pass.
 
 <details>
 <summary>Prefer to install it into an existing repo by hand?</summary>
@@ -210,7 +222,14 @@ you set up — the topics do the rest:
 | **Site / docs** | `documentation` `awesome-list` `static-site` | slow, steady, star-heavy |
 | **Library** | `library` `sdk` `typescript` | merges and releases dominate |
 
-Set them once:
+Ready-made configs for all five live in [`examples/`](examples/README.md) — each
+one tunes the topics *and* the point table for that kind of project:
+
+```bash
+cp examples/cli/config.json .rivalmode/config.json
+```
+
+Or set just the topics:
 
 ```json
 { "rivals": { "fallbackTopics": ["cli", "developer-tools"] } }
@@ -253,6 +272,11 @@ lives between markers:
 Everything outside those markers is yours. Regeneration is idempotent: if
 nothing changed, nothing is committed. A second identical run writes zero bytes.
 
+Three workflows write these files, so publishing goes through
+[`tools/publish.sh`](tools/publish.sh): it serialises them behind one concurrency
+group, and if a push is still rejected it re-renders on top of whatever landed
+instead of trying to merge generated SVGs. Human commits are never discarded.
+
 ### The weekly recap
 
 Every Monday the workflow posts a week-in-review comment on a single pinned
@@ -290,15 +314,21 @@ zero code. [CONTRIBUTING.md](CONTRIBUTING.md) has the theme contract, the
 golden-test workflow, and the local dev loop.
 
 ```bash
-npm test                     # 82 fixture-based tests, no network
-npm run demo                 # regenerate the README GIF
-node tools/preview.mjs --png # render every card in every theme
+npm test                        # 91 fixture-based tests, no network, no token
+node tools/preview.mjs --png    # render every card in every theme
+npm run demo                    # regenerate the README GIF (devDeps)
+npm run showcase                # regenerate the theme comparison image
+node src/cli.mjs doctor         # check token, repo access, topics, theme
 ```
+
+The CI matrix runs the suite on Node 20 and 22, parses every workflow, and
+replays the whole lifecycle against a scratch repo: install → render → commit →
+re-render (must be a no-op) → uninstall (must restore the README byte for byte).
 
 ---
 
-<sub>MIT licensed. Built to be forked, themed, and beaten by the repo one place
-above you.</sub>
+<sub>[MIT licensed](LICENSE) · built to be forked, themed, and beaten by the repo
+one place above you.</sub>
 
 <!-- rivalmode:start footer -->
 <sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 03:27 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>

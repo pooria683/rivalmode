@@ -19,7 +19,8 @@
     "uninstall": "node src/cli.mjs uninstall",
     "test": "node tools/test.mjs",
     "demo": "node tools/make-demo-gif.mjs",
-    "test:watch": "node --test --watch tests/score.test.mjs"
+    "test:watch": "node --test --watch tests/score.test.mjs",
+    "showcase": "node tools/make-theme-showcase.mjs"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
