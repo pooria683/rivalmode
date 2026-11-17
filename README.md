@@ -331,5 +331,5 @@ re-render (must be a no-op) → uninstall (must restore the README byte for byte
 one place above you.</sub>
 
 <!-- rivalmode:start footer -->
-<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 03:27 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
+<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 03:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
 <!-- rivalmode:end footer -->
