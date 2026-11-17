@@ -116,7 +116,7 @@ in `.github/workflows/`, hourly and daily.
 <!-- rivalmode:start badges -->
 <img src="assets/rivalmode/momentum.svg" alt="momentum 43" />
 <img src="assets/rivalmode/rank.svg" alt="rank 1 of 13" />
-<img src="assets/rivalmode/streak.svg" alt="commit streak 1 days" />
+<img src="assets/rivalmode/streak.svg" alt="commit streak 1d" />
 <img src="assets/rivalmode/score.svg" alt="points this week" />
 <img src="assets/rivalmode/license.svg" alt="license MIT" />
 <!-- rivalmode:end badges -->
@@ -126,7 +126,7 @@ in `.github/workflows/`, hourly and daily.
 
 **You are #1 of 13 in your topic cluster.** ⚠️ `IsDerky/homelab` is gaining faster than you (0.09★/day vs 0). Hold the line.
 
-**Momentum +43** ▲ heating up · 1 commits this week vs 0 last week
+**Momentum +43** ▲ heating up · 1 commit this week vs 0 last week
 
 > [!NOTE]
 > Some numbers are stale this run — rival ladder cached from the last daily run
@@ -301,5 +301,5 @@ node tools/preview.mjs --png # render every card in every theme
 above you.</sub>
 
 <!-- rivalmode:start footer -->
-<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 03:24 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
+<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-17 03:26 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
 <!-- rivalmode:end footer -->
