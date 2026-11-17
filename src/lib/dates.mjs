@@ -69,6 +69,20 @@ export function shortAge(input, now = Date.now()) {
   return `${Math.floor(diff / (365 * DAY))}y`;
 }
 
+/**
+ * The "now" used for relative labels in rendered output.
+ * Pinned in tests (and available via RIVALMODE_NOW) so snapshots are stable;
+ * in production it is simply the current time.
+ */
+export function nowMs() {
+  const pinned = process.env.RIVALMODE_NOW;
+  if (pinned) {
+    const parsed = Number(pinned) || Date.parse(pinned);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  }
+  return Date.now();
+}
+
 /** `2026-03-04T10:11:12Z` -> `Mar 04` (or `Mar 04, 2025` when not this year). */
 export function shortDate(input, now = Date.now()) {
   const d = new Date(input);

@@ -13,7 +13,7 @@
 
 **Momentum +100** ▲ on fire · 12 commits this week vs 21 last week · 6-day streak (+18) · +25 from rival wins
 
-<sub>updated 5h ago · every number comes from the GitHub API, nothing is hand-edited</sub>
+<sub>updated just now · every number comes from the GitHub API, nothing is hand-edited</sub>
 <!-- rivalmode:end scoreboard -->
 
 <!-- rivalmode:start rivals -->
@@ -41,20 +41,20 @@
 <!-- rivalmode:start feed -->
 <img src="assets/rivalmode/feed.svg" alt="Live event feed" width="430" />
 
-- `6h` [pooria683 pushed 3 commits](https://github.com/pooria683/rivalmode) — feat(svg): momentum gauge with a streak bonus
-- `6h` [dev-bat starred the repo](https://github.com/pooria683/rivalmode)
-- `7h` [PR #58 merged](https://github.com/pooria683/rivalmode) — rivals: skip repos younger than a week
-- `7h` [julesortiz forked the repo](https://github.com/pooria683/rivalmode) — julesortiz/rivalmode
-- `8h` [pooria683 shipped v1.0.0](https://github.com/pooria683/rivalmode) — RivalMode v1.0.0
-- `9h` [issue #61 closed](https://github.com/pooria683/rivalmode) — Feed shows stale events on forks
-- `9h` [mialee pushed 1 commit](https://github.com/pooria683/rivalmode) — fix: don’t crash when the search API rate-limits
-- `10h` [nyx starred the repo](https://github.com/pooria683/rivalmode)
-- `10h` [kwan created branch feat/themes](https://github.com/pooria683/rivalmode)
-- `11h` [tobi pushed 2 commits](https://github.com/pooria683/rivalmode) — feat(rivals): detect forks that out-commit upstream
+- `4m` [pooria683 pushed 3 commits](https://github.com/pooria683/rivalmode) — feat(svg): momentum gauge with a streak bonus
+- `41m` [dev-bat starred the repo](https://github.com/pooria683/rivalmode)
+- `1h` [PR #58 merged](https://github.com/pooria683/rivalmode) — rivals: skip repos younger than a week
+- `1h` [julesortiz forked the repo](https://github.com/pooria683/rivalmode) — julesortiz/rivalmode
+- `2h` [pooria683 shipped v1.0.0](https://github.com/pooria683/rivalmode) — RivalMode v1.0.0
+- `3h` [issue #61 closed](https://github.com/pooria683/rivalmode) — Feed shows stale events on forks
+- `3h` [mialee pushed 1 commit](https://github.com/pooria683/rivalmode) — fix: don’t crash when the search API rate-limits
+- `4h` [nyx starred the repo](https://github.com/pooria683/rivalmode)
+- `5h` [kwan created branch feat/themes](https://github.com/pooria683/rivalmode)
+- `5h` [tobi pushed 2 commits](https://github.com/pooria683/rivalmode) — feat(rivals): detect forks that out-commit upstream
 <!-- rivalmode:end feed -->
 
 <!-- rivalmode:start conquests -->
-- ◆ **released v1.0.0** — 1d ago · +25 pts
+- ◆ **released v1.0.0** — 20h ago · +25 pts
 - ◆ **released v0.9.0** — 1w ago · +25 pts
 - ⇄ **merged [#58](#)** rivals: skip repos younger than a week — mialee · +10 pts
 - ⇄ **merged [#57](#)** themes: add synthwave — julesortiz · +10 pts

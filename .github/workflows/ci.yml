@@ -147,19 +147,27 @@ jobs:
           diff -q README.md /tmp/readme-original.md || { echo "::error::uninstall did not restore the README"; diff README.md /tmp/readme-original.md; exit 1; }
           echo "clean uninstall"
 
-      - name: Degraded mode reports a useful failure, never a zero
+      - name: Failure modes are loud and specific, never a silent zero
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/scratch"
           node src/cli.mjs setup >/dev/null
           unset GITHUB_TOKEN GH_TOKEN
-          if node src/cli.mjs scoreboard 2>err.txt; then
-            echo "::error::expected failure without a token or network, got success"
+
+          # 1. A repo we cannot read must fail with a message naming the causes,
+          #    and must not leave a scoreboard full of zeroes behind.
+          if GITHUB_REPOSITORY="rivalmode-ci/nonexistent-repo" node src/cli.mjs scoreboard 2>err.txt; then
+            echo "::error::expected failure for an unreadable repo, got success"
             exit 1
           fi
-          grep -qi "could not read\|token\|rate limit" err.txt || {
-            echo "::error::unhelpful error message:"
-            cat err.txt
+          grep -q "could not read" err.txt || { echo "::error::message does not say what happened:"; cat err.txt; exit 1; }
+          grep -qi "token" err.txt || { echo "::error::message does not mention the token:"; cat err.txt; exit 1; }
+          echo "unreadable repo: $(grep -o 'RivalMode could not read[^.]*' err.txt | head -1)"
+
+          # 2. A repo it cannot even name must fail immediately, not half-render.
+          if node src/cli.mjs scoreboard --root="$RUNNER_TEMP/empty" 2>err2.txt; then
+            echo "::error::expected failure with no repo configured, got success"
             exit 1
-          }
-          echo "degrades with a clear message"
+          fi
+          grep -qi "could not work out which repo" err2.txt || { echo "::error::unhelpful message:"; cat err2.txt; exit 1; }
+          echo "missing repo: clear message"

@@ -36,7 +36,8 @@ export function resolveRepo(config, env = process.env, root = '.') {
   const slug = config.repo || detectRepo(config, env) || detectRepoFromGit(root);
   if (!slug) {
     throw new Error(
-      'RivalMode could not work out which repo it is running in. Set `repo` in .rivalmode/config.json, or run inside GitHub Actions.'
+      'RivalMode could not work out which repo it is running in. Set `repo` in .rivalmode/config.json, ' +
+        'or run inside GitHub Actions (GITHUB_REPOSITORY is read automatically).'
     );
   }
   return parseRepoSlug(slug);

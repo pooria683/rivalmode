@@ -121,7 +121,10 @@ export class GithubClient {
 
       if (res.status === 404) {
         if (allow404) return { body: null, response: res };
-        throw new GithubError(`404 for ${url}`, { status: 404, url });
+        // Unauthenticated requests get a 404 (not a 403) once the hourly quota
+        // is gone, so say so instead of "not found".
+        const hint = this.authenticated ? '' : ' (no token: GitHub returns 404 when the unauthenticated rate limit is exhausted)';
+        throw new GithubError(`404 for ${url}${hint}`, { status: 404, url });
       }
 
       if (res.status === 401) {
@@ -316,7 +319,7 @@ async function safeText(res) {
 export function describeError(err) {
   if (err instanceof GithubError) {
     if (err.status === 403) return 'GitHub rate limit reached — showing last known numbers';
-    if (err.status === 404) return 'Not found (private repo or no permission)';
+    if (err.status === 404) return 'Not found or not readable (private repo, missing permission, or unauthenticated rate limit)';
     if (err.status === 401) return 'GitHub token rejected';
     return err.message;
   }

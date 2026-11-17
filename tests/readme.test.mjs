@@ -17,6 +17,9 @@ import { makeSnapshot, makeRivals, makeMomentum } from '../src/lib/mock.mjs';
 import { DEFAULT_CONFIG } from '../src/lib/config.mjs';
 
 const FIXED_NOW = Date.UTC(2026, 10, 16, 12, 0, 0);
+// Relative labels ("updated 4m ago") must not drift between runs, or the
+// golden snapshot would need updating every hour.
+process.env.RIVALMODE_NOW = String(FIXED_NOW);
 
 function fixture(overrides = {}) {
   const { snapshot, rivals } = makeSnapshot({ now: FIXED_NOW, seed: 'readme' });

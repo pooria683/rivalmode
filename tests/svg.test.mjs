@@ -26,6 +26,7 @@ import { DEFAULT_CONFIG } from '../src/lib/config.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const GOLDEN_DIR = path.join(HERE, 'golden');
 const FIXED_NOW = Date.UTC(2026, 10, 16, 12, 0, 0);
+process.env.RIVALMODE_NOW = String(FIXED_NOW);
 
 function fixedFixture() {
   const { snapshot, rivals } = makeSnapshot({ now: FIXED_NOW, seed: 'golden' });

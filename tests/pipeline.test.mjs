@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { collectSnapshot, createLog } from '../src/lib/collect.mjs';
+import { collectSnapshot, createLog, unreadableRepoMessage } from '../src/lib/collect.mjs';
 import { discoverRivals, pickTopics, compactForState, peerBand, starBand, isRivalMaterial } from '../src/lib/rivals.mjs';
 import { run } from '../src/pipeline.mjs';
 import { DEFAULT_CONFIG, normalizeConfig, parseRepoSlug, detectRepo } from '../src/lib/config.mjs';
@@ -44,6 +44,20 @@ test('collectSnapshot refuses to invent numbers when the repo is unreadable', as
     () => collectSnapshot(client, SLUG, CONFIG, { log: createLog(true), now: NOW }),
     /could not read pooria683\/rivalmode/
   );
+});
+
+test('the unreadable-repo message names the likely cause', () => {
+  const anonymous = unreadableRepoMessage({ slug: 'a/b' }, { authenticated: false });
+  assert.match(anonymous, /GITHUB_TOKEN/);
+  assert.match(anonymous, /private/);
+  assert.match(anonymous, /a\/b/);
+
+  const authenticated = unreadableRepoMessage({ slug: 'a/b' }, { authenticated: true });
+  assert.ok(!authenticated.includes('No GITHUB_TOKEN'), 'do not blame a token that was supplied');
+  assert.match(authenticated, /permission|private/i);
+
+  const withLog = unreadableRepoMessage({ slug: 'a/b' }, { authenticated: true, log: { warnings: ['repository details: 404'] } });
+  assert.match(withLog, /Last API error: repository details: 404/);
 });
 
 test('private repos are flagged and set degraded mode', async () => {
@@ -218,6 +232,7 @@ test('GithubClient returns null for 404 and throws typed errors otherwise', asyn
   await assert.rejects(() => forbidden.get('/x'), (err) => err instanceof GithubError && err.status === 403);
 
   assert.match(describeError(new GithubError('x', { status: 403 })), /rate limit/);
+  assert.match(describeError(new GithubError('x', { status: 404 })), /not readable|rate limit/i);
   assert.match(describeError(new Error('boom')), /boom/);
 });
 

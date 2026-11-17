@@ -13,7 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { shortAge } from './lib/dates.mjs';
+import { nowMs, shortAge } from './lib/dates.mjs';
 
 export const SECTIONS = ['badges', 'scoreboard', 'rivals', 'team', 'feed', 'conquests', 'footer'];
 
@@ -53,7 +53,7 @@ export function scoreboardSection({ snapshot, momentum, ranking, assets, warning
     lines.push(`> Some numbers are stale this run — ${warnings.slice(0, 2).join('; ')}`);
   }
   lines.push('');
-  const age = shortAge(snapshot.generatedAt);
+  const age = shortAge(snapshot.generatedAt, nowMs());
   lines.push(
     `<sub>updated ${age === 'now' ? 'just now' : `${age} ago`} · every number comes from the GitHub API, nothing is hand-edited</sub>`
   );
@@ -172,7 +172,7 @@ export function feedSection({ snapshot, assets }) {
   for (const item of items) {
     const link = item.url ? `[${escapeMd(item.text)}](${item.url})` : escapeMd(item.text);
     const detail = item.detail ? ` — ${escapeMd(truncate(item.detail, 70))}` : '';
-    lines.push(`- \`${shortAge(item.at)}\` ${link}${detail}`);
+    lines.push(`- \`${shortAge(item.at, nowMs())}\` ${link}${detail}`);
   }
   return lines.join('\n');
 }
@@ -180,7 +180,7 @@ export function feedSection({ snapshot, assets }) {
 export function conquestsSection({ snapshot, points }) {
   const rows = [];
   for (const release of (snapshot.releases || []).slice(0, 3)) {
-    rows.push(`- ◆ **released ${release.tag}** — ${shortAge(release.at)} ago · +${points.release} pts`);
+    rows.push(`- ◆ **released ${release.tag}** — ${shortAge(release.at, nowMs())} ago · +${points.release} pts`);
   }
   for (const pr of (snapshot.merges?.recent || []).slice(0, 3)) {
     rows.push(`- ⇄ **merged [#${pr.number}](${pr.url})** ${escapeMd(truncate(pr.title, 64))} — ${pr.author} · +${points.merge} pts`);

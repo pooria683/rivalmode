@@ -8,6 +8,23 @@ import { DAY, dayKey, dayKeysBetween, startOfDay, startOfWeek } from './dates.mj
 
 const MAX_COMMIT_PAGES = 4;
 
+/**
+ * Why can't we read the repo? Say the actual likely cause, because "check the
+ * workflow" is useless when the real problem is a missing token or a limit.
+ */
+export function unreadableRepoMessage(slug, { authenticated = false, log = null } = {}) {
+  const causes = [];
+  if (!authenticated) {
+    causes.push(
+      'No GITHUB_TOKEN was provided. Unauthenticated requests are capped at 60/hour and GitHub answers with 404 once that is gone.'
+    );
+  }
+  causes.push(`The repo may be private: add \`"private": true\` to .rivalmode/config.json to enable degraded mode.`);
+  causes.push('The token may lack read access to this repository (Actions needs `contents: read`).');
+  if (log?.warnings?.length) causes.push(`Last API error: ${log.warnings[log.warnings.length - 1]}`);
+  return `RivalMode could not read ${slug.slug}. ${causes.join(' ')}`;
+}
+
 export function createLog(quiet = false) {
   const warnings = [];
   return {
@@ -46,9 +63,7 @@ export async function collectSnapshot(client, slug, config, { log = createLog(),
 
   const repo = await safe(log, 'repository details', () => client.get(base), null);
   if (!repo) {
-    throw new Error(
-      `RivalMode could not read ${slug.slug}. If the repo is private, add \`"private": true\` to .rivalmode/config.json; otherwise check that the workflow can read the repository.`
-    );
+    throw new Error(unreadableRepoMessage(slug, { authenticated: client.authenticated, log }));
   }
 
   const degraded = Boolean(repo.private || config.private);
