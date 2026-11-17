@@ -102,7 +102,7 @@ export function badgeSpecs({ momentum, ranking, snapshot, license = 'MIT' }) {
     file: 'streak.svg',
     spec: {
       label: 'commit streak',
-      value: `${snapshot.commits.streak}d streak`,
+      value: snapshot.commits.streak ? `${snapshot.commits.streak}d streak` : 'no streak',
       color: snapshot.commits.streak >= 7 ? BADGE_COLORS.brightgreen : snapshot.commits.streak > 0 ? BADGE_COLORS.green : BADGE_COLORS.grey,
       logo: 'flame',
     },

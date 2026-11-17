@@ -1,7 +1,7 @@
 <!-- rivalmode:start badges -->
 <img src="assets/rivalmode/momentum.svg" alt="momentum 100" />
 <img src="assets/rivalmode/rank.svg" alt="rank 5 of 8" />
-<img src="assets/rivalmode/streak.svg" alt="commit streak 6 days" />
+<img src="assets/rivalmode/streak.svg" alt="commit streak 6d" />
 <img src="assets/rivalmode/score.svg" alt="points this week" />
 <img src="assets/rivalmode/license.svg" alt="license MIT" />
 <!-- rivalmode:end badges -->

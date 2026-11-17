@@ -206,6 +206,28 @@ test('writeReadme only writes when bytes change', () => {
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
+test('counts read like English, not like a database dump', () => {
+  const { snapshot, momentum, rivals, config } = fixture();
+  const one = {
+    ...momentum,
+    current: { ...momentum.current, commits: 1 },
+    previous: { ...momentum.previous, commits: 0 },
+  };
+  const sections = buildSections({
+    snapshot: { ...snapshot, commits: { ...snapshot.commits, streak: 1 } },
+    momentum: one,
+    ranking: rivals.ranking,
+    rivals,
+    config,
+    points: config.points,
+    assets: config.outDir,
+  });
+  assert.ok(sections.scoreboard.includes('1 commit this week vs 0 last week'), sections.scoreboard);
+  assert.ok(!sections.scoreboard.includes('1 commits'));
+  assert.ok(!sections.badges.includes('1 days'));
+  assert.ok(sections.badges.includes('1d streak'));
+});
+
 test('markdown escaping keeps feed lines readable', () => {
   const { snapshot, momentum, rivals, config } = fixture();
   const withTricky = {

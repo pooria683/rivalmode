@@ -35,7 +35,7 @@ export function badgesSection({ momentum, ranking, snapshot, assets, degraded })
   return [
     img('momentum.svg', `momentum ${momentum.score}`),
     img('rank.svg', ranking?.rank ? `rank ${ranking.rank} of ${ranking.clusterSize}` : 'rank'),
-    img('streak.svg', `commit streak ${snapshot.commits.streak} days`),
+    img('streak.svg', snapshot.commits.streak ? `commit streak ${snapshot.commits.streak}d` : 'no commit streak'),
     img('score.svg', 'points this week'),
     img('license.svg', `license ${snapshot.repo.license || 'MIT'}`),
     ...(degraded ? ['<sub>(degraded mode)</sub>'] : []),
@@ -53,9 +53,8 @@ export function scoreboardSection({ snapshot, momentum, ranking, assets, warning
     lines.push(`> Some numbers are stale this run — ${warnings.slice(0, 2).join('; ')}`);
   }
   lines.push('');
-  const age = shortAge(snapshot.generatedAt, nowMs());
   lines.push(
-    `<sub>updated ${age === 'now' ? 'just now' : `${age} ago`} · every number comes from the GitHub API, nothing is hand-edited</sub>`
+    `<sub>updated ${agoLabel(snapshot.generatedAt)} · every number comes from the GitHub API, nothing is hand-edited</sub>`
   );
   return lines.join('\n');
 }
@@ -95,11 +94,23 @@ function behindSentence(ranking) {
   return `Next up: \`${next.slug}\` at ${next.velocity}★/day. Nobody is catching you right now.`;
 }
 
+/** `4m ago`, `just now`. */
+function agoLabel(at) {
+  const age = shortAge(at, nowMs());
+  return age === 'now' ? 'just now' : `${age} ago`;
+}
+
+/** `1 commit`, `2 commits`, `0 commits`. */
+function plural(count, word) {
+  const n = Number(count) || 0;
+  return `${n} ${word}${n === 1 ? '' : 's'}`;
+}
+
 function momentumLine(momentum) {
   const arrow = momentum.direction === 'up' ? '▲' : momentum.direction === 'down' ? '▼' : '◆';
   const parts = [
     `**Momentum ${momentum.score > 0 ? '+' : ''}${momentum.score}** ${arrow} ${momentum.label}`,
-    `${momentum.current.commits} commits this week vs ${momentum.previous.commits} last week`,
+    `${plural(momentum.current.commits, 'commit')} this week vs ${momentum.previous.commits} last week`,
   ];
   if (momentum.streak > 1) parts.push(`${momentum.streak}-day streak (+${momentum.streakBonus})`);
   if (momentum.rivalBonus) parts.push(`${momentum.rivalBonus > 0 ? '+' : ''}${momentum.rivalBonus} from rival wins`);
@@ -180,7 +191,7 @@ export function feedSection({ snapshot, assets }) {
 export function conquestsSection({ snapshot, points }) {
   const rows = [];
   for (const release of (snapshot.releases || []).slice(0, 3)) {
-    rows.push(`- ◆ **released ${release.tag}** — ${shortAge(release.at, nowMs())} ago · +${points.release} pts`);
+    rows.push(`- ◆ **released ${release.tag}** — ${agoLabel(release.at)} · +${points.release} pts`);
   }
   for (const pr of (snapshot.merges?.recent || []).slice(0, 3)) {
     rows.push(`- ⇄ **merged [#${pr.number}](${pr.url})** ${escapeMd(truncate(pr.title, 64))} — ${pr.author} · +${points.merge} pts`);
