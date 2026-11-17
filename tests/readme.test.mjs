@@ -224,8 +224,9 @@ test('counts read like English, not like a database dump', () => {
   });
   assert.ok(sections.scoreboard.includes('1 commit this week vs 0 last week'), sections.scoreboard);
   assert.ok(!sections.scoreboard.includes('1 commits'));
+  // The badge is an image; what we can assert on is its alt text.
   assert.ok(!sections.badges.includes('1 days'));
-  assert.ok(sections.badges.includes('1d streak'));
+  assert.ok(sections.badges.includes('commit streak 1d'));
 });
 
 test('markdown escaping keeps feed lines readable', () => {
