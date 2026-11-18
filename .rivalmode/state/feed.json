@@ -22,6 +22,16 @@
     {
       "type": "CreateEvent",
       "icon": "+",
+      "actor": "pooria683",
+      "avatar": "https://avatars.githubusercontent.com/u/319389177?",
+      "at": "2026-11-16T17:55:31Z",
+      "text": "pooria683 created branch arena/6b8158e7-rivalmode",
+      "detail": "",
+      "url": "https://github.com/undefined"
+    },
+    {
+      "type": "CreateEvent",
+      "icon": "+",
       "actor": "arena-ai-coding-agent[bot]",
       "avatar": "https://avatars.githubusercontent.com/u/298482267?",
       "at": "2026-11-16T17:34:19Z",
