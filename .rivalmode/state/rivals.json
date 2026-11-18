@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-17T16:16:07.840Z",
+  "generatedAt": "2026-11-18T15:50:08.241Z",
   "mode": "ranked",
   "topicCluster": [
     "github-actions",
@@ -24,6 +24,18 @@
       "passed": [],
       "passedBy": [],
       "entered": [
+        "ronedgecomb/anything",
+        "yutigi/TerminalCanvas",
+        "thirurishi/paris-velib-operations-intelligence",
+        "N-Zik-Group/N-Zik-Theme-Store",
+        "nexmentorg/.github",
+        "partalemre/transceiver",
+        "XOX2707/btc-neff",
+        "minhtran3124/agent-harness",
+        "Science-and-Technology-Consulting-LLC/elements-of-style-lessons",
+        "torenCodes/invest-lab"
+      ],
+      "left": [
         "davidackerman/still-life",
         "codemanyhq/bench",
         "DrMoriarty/drcode",
@@ -34,18 +46,6 @@
         "RobinSishodia/devops-salesforce-notes",
         "Leostruka/devin-bundle",
         "j0ltdevv/venv-proxy"
-      ],
-      "left": [
-        "IsDerky/homelab",
-        "AhmedNavaz/codeshi",
-        "ImJanindu/home-labs",
-        "BarryPekerman/handover-hosting",
-        "i2Dev-com/homefield",
-        "Katta041/asitis-agent-tools",
-        "Denisyoya/Proxy-List-Gamt",
-        "iamRooney/contrib-blaster",
-        "Jasmin319/GitHub-for-BI-Portfolio",
-        "StorywithLove/envdata-sync"
       ]
     },
     "entries": [
@@ -57,63 +57,63 @@
         "isSelf": true
       },
       {
-        "slug": "davidackerman/still-life",
+        "slug": "ronedgecomb/anything",
         "rank": 2,
         "stars": 1,
-        "velocity": 0.1,
+        "velocity": 0.09,
         "isSelf": false
       },
       {
-        "slug": "codemanyhq/bench",
+        "slug": "yutigi/TerminalCanvas",
         "rank": 3,
+        "stars": 1,
+        "velocity": 0.09,
+        "isSelf": false
+      },
+      {
+        "slug": "thirurishi/paris-velib-operations-intelligence",
+        "rank": 4,
+        "stars": 1,
+        "velocity": 0.08,
+        "isSelf": false
+      },
+      {
+        "slug": "N-Zik-Group/N-Zik-Theme-Store",
+        "rank": 5,
         "stars": 1,
         "velocity": 0.06,
         "isSelf": false
       },
       {
-        "slug": "DrMoriarty/drcode",
-        "rank": 4,
-        "stars": 1,
-        "velocity": 0.03,
-        "isSelf": false
-      },
-      {
-        "slug": "slabbdev/grisematter",
-        "rank": 5,
-        "stars": 1,
-        "velocity": 0.03,
-        "isSelf": false
-      },
-      {
-        "slug": "Ashon/pacenote",
+        "slug": "nexmentorg/.github",
         "rank": 6,
         "stars": 1,
-        "velocity": 0.02,
+        "velocity": 0.05,
         "isSelf": false
       },
       {
-        "slug": "COEFR/Hermes-Signal-bot",
+        "slug": "partalemre/transceiver",
         "rank": 7,
         "stars": 1,
         "velocity": 0.02,
         "isSelf": false
       },
       {
-        "slug": "HammerTime19/intel60",
+        "slug": "XOX2707/btc-neff",
         "rank": 8,
         "stars": 1,
         "velocity": 0.02,
         "isSelf": false
       },
       {
-        "slug": "RobinSishodia/devops-salesforce-notes",
+        "slug": "minhtran3124/agent-harness",
         "rank": 9,
         "stars": 1,
-        "velocity": 0.02,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "Leostruka/devin-bundle",
+        "slug": "Science-and-Technology-Consulting-LLC/elements-of-style-lessons",
         "rank": 10,
         "stars": 1,
         "velocity": 0.01,
@@ -127,14 +127,14 @@
         "isSelf": false
       },
       {
-        "slug": "j0ltdevv/venv-proxy",
+        "slug": "simonesugliano/ArtiTam-Gallery",
         "rank": 12,
         "stars": 1,
         "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "simonesugliano/ArtiTam-Gallery",
+        "slug": "torenCodes/invest-lab",
         "rank": 13,
         "stars": 1,
         "velocity": 0,
@@ -167,41 +167,46 @@
       "at": "2026-11-17T16:16:07.840Z",
       "rank": 1,
       "clusterSize": 13
+    },
+    {
+      "at": "2026-11-18T15:50:08.241Z",
+      "rank": 1,
+      "clusterSize": 13
     }
   ],
   "rivals": [
     {
-      "slug": "davidackerman/still-life",
+      "slug": "ronedgecomb/anything",
       "stars": 1,
-      "velocity": 0.1,
+      "velocity": 0.09,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "j0ltdevv/venv-proxy",
+      "slug": "minhtran3124/agent-harness",
       "stars": 1,
-      "velocity": 0,
+      "velocity": 0.01,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "Ashon/pacenote",
+      "slug": "thirurishi/paris-velib-operations-intelligence",
+      "stars": 1,
+      "velocity": 0.08,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "partalemre/transceiver",
       "stars": 1,
       "velocity": 0.02,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "DrMoriarty/drcode",
+      "slug": "yutigi/TerminalCanvas",
       "stars": 1,
-      "velocity": 0.03,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "RobinSishodia/devops-salesforce-notes",
-      "stars": 1,
-      "velocity": 0.02,
+      "velocity": 0.09,
       "kind": "topic",
       "ahead": null
     },
@@ -213,35 +218,14 @@
       "ahead": null
     },
     {
-      "slug": "codemanyhq/bench",
+      "slug": "N-Zik-Group/N-Zik-Theme-Store",
       "stars": 1,
       "velocity": 0.06,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "slabbdev/grisematter",
-      "stars": 1,
-      "velocity": 0.03,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "HammerTime19/intel60",
-      "stars": 1,
-      "velocity": 0.02,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "COEFR/Hermes-Signal-bot",
-      "stars": 1,
-      "velocity": 0.02,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "Leostruka/devin-bundle",
+      "slug": "Science-and-Technology-Consulting-LLC/elements-of-style-lessons",
       "stars": 1,
       "velocity": 0.01,
       "kind": "topic",
@@ -253,20 +237,41 @@
       "velocity": 0,
       "kind": "topic",
       "ahead": null
+    },
+    {
+      "slug": "XOX2707/btc-neff",
+      "stars": 1,
+      "velocity": 0.02,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "torenCodes/invest-lab",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "nexmentorg/.github",
+      "stars": 1,
+      "velocity": 0.05,
+      "kind": "topic",
+      "ahead": null
     }
   ],
   "fans": [],
   "forks": [],
   "warnings": [
-    "star velocity davidackerman/still-life: GitHub rate limit reached — showing last known numbers",
-    "star velocity j0ltdevv/venv-proxy: GitHub rate limit reached — showing last known numbers",
-    "star velocity Ashon/pacenote: GitHub rate limit reached — showing last known numbers",
-    "star velocity DrMoriarty/drcode: GitHub rate limit reached — showing last known numbers",
-    "star velocity RobinSishodia/devops-salesforce-notes: GitHub rate limit reached — showing last known numbers",
+    "star velocity ronedgecomb/anything: GitHub rate limit reached — showing last known numbers",
+    "star velocity minhtran3124/agent-harness: GitHub rate limit reached — showing last known numbers",
+    "star velocity thirurishi/paris-velib-operations-intelligence: GitHub rate limit reached — showing last known numbers",
+    "star velocity partalemre/transceiver: GitHub rate limit reached — showing last known numbers",
+    "star velocity yutigi/TerminalCanvas: GitHub rate limit reached — showing last known numbers",
     "star velocity simonesugliano/ArtiTam-Gallery: GitHub rate limit reached — showing last known numbers",
-    "star velocity codemanyhq/bench: GitHub rate limit reached — showing last known numbers",
-    "star velocity slabbdev/grisematter: GitHub rate limit reached — showing last known numbers",
-    "star velocity HammerTime19/intel60: GitHub rate limit reached — showing last known numbers",
-    "star velocity COEFR/Hermes-Signal-bot: GitHub rate limit reached — showing last known numbers"
+    "star velocity N-Zik-Group/N-Zik-Theme-Store: GitHub rate limit reached — showing last known numbers",
+    "star velocity Science-and-Technology-Consulting-LLC/elements-of-style-lessons: GitHub rate limit reached — showing last known numbers",
+    "star velocity aredwan-xyz/techpulse-daily: GitHub rate limit reached — showing last known numbers",
+    "star velocity XOX2707/btc-neff: GitHub rate limit reached — showing last known numbers"
   ]
 }
