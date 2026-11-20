@@ -128,7 +128,7 @@ in `.github/workflows/`, hourly and daily.
 <!-- rivalmode:start badges -->
 <img src="assets/rivalmode/momentum.svg" alt="momentum 100" />
 <img src="assets/rivalmode/rank.svg" alt="rank 1 of 13" />
-<img src="assets/rivalmode/streak.svg" alt="commit streak 4d" />
+<img src="assets/rivalmode/streak.svg" alt="commit streak 5d" />
 <img src="assets/rivalmode/score.svg" alt="points this week" />
 <img src="assets/rivalmode/license.svg" alt="license MIT" />
 <!-- rivalmode:end badges -->
@@ -138,7 +138,7 @@ in `.github/workflows/`, hourly and daily.
 
 **You are #1 of 13 in your topic cluster.** ⚠️ `rauni5/gclone` is gaining faster than you (0.13★/day vs 0). Hold the line.
 
-**Momentum +100** ▲ on fire · 35 commits this week vs 0 last week · 4-day streak (+12)
+**Momentum +100** ▲ on fire · 36 commits this week vs 0 last week · 5-day streak (+15)
 
 > [!NOTE]
 > Some numbers are stale this run — rival ladder cached from the last daily run
@@ -162,7 +162,7 @@ in `.github/workflows/`, hourly and daily.
 <img src="assets/rivalmode/contributors.svg" alt="Contributor bar race" width="430" />
 
 🥇 **arena-ai-coding-agent[bot]** leads this month with **1 commits** (1 all-time).
-🔥 **4-day commit streak.** Miss a day and it resets.
+🔥 **5-day commit streak.** Miss a day and it resets.
 <!-- rivalmode:end team -->
 
 </td><td valign="top">
@@ -170,8 +170,8 @@ in `.github/workflows/`, hourly and daily.
 <!-- rivalmode:start feed -->
 <img src="assets/rivalmode/feed.svg" alt="Live event feed" width="430" />
 
-- `2d` PR #1 merged
-- `2d` PR #1 opened
+- `3d` PR #1 merged
+- `3d` PR #1 opened
 - `3d` [pooria683 created branch arena/6b8158e7-rivalmode](https://github.com/undefined)
 - `3d` [arena-ai-coding-agent\[bot\] created branch main](https://github.com/undefined)
 <!-- rivalmode:end feed -->
@@ -335,5 +335,5 @@ re-render (must be a no-op) → uninstall (must restore the README byte for byte
 one place above you.</sub>
 
 <!-- rivalmode:start footer -->
-<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-20 03:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
+<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-20 11:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
 <!-- rivalmode:end footer -->
