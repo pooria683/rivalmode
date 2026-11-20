@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-19T15:54:27.862Z",
+  "generatedAt": "2026-11-20T15:38:08.204Z",
   "mode": "ranked",
   "topicCluster": [
     "github-actions",
@@ -24,28 +24,30 @@
       "passed": [],
       "passedBy": [],
       "entered": [
+        "Asmodeus14/ChronoStack",
+        "glastor-core/.github",
+        "brunovicco/codex-python-engineering-harness",
+        "jpmorard/tokki-public",
+        "shivamselam/seminara-agentic-suite",
+        "zhizhixia/enough",
+        "aefreedman/pi-plastic",
+        "atsupi/CDK-ECS-Startup",
+        "markoblogo/ABVXsite",
+        "StorywithLove/envdata-sync",
+        "torenCodes/invest-lab"
+      ],
+      "left": [
         "rauni5/gclone",
         "q529665795k/cf-webhook-inspector",
-        "davidackerman/still-life",
         "elcoosp/guiwright",
         "CorvidLabs/chough",
         "cschmertz/deptime",
         "mawena/CCS",
         "CartagoGit/DelendAI",
         "iKy0ff/manga-pace-ledger",
-        "Mohith535/opportunity-hunter"
-      ],
-      "left": [
-        "ronedgecomb/anything",
-        "yutigi/TerminalCanvas",
-        "thirurishi/paris-velib-operations-intelligence",
-        "N-Zik-Group/N-Zik-Theme-Store",
-        "nexmentorg/.github",
-        "partalemre/transceiver",
-        "XOX2707/btc-neff",
-        "minhtran3124/agent-harness",
-        "Science-and-Technology-Consulting-LLC/elements-of-style-lessons",
-        "torenCodes/invest-lab"
+        "Mohith535/opportunity-hunter",
+        "aredwan-xyz/techpulse-daily",
+        "simonesugliano/ArtiTam-Gallery"
       ]
     },
     "entries": [
@@ -57,84 +59,84 @@
         "isSelf": true
       },
       {
-        "slug": "rauni5/gclone",
+        "slug": "Asmodeus14/ChronoStack",
         "rank": 2,
         "stars": 1,
-        "velocity": 0.13,
-        "isSelf": false
-      },
-      {
-        "slug": "q529665795k/cf-webhook-inspector",
-        "rank": 3,
-        "stars": 1,
-        "velocity": 0.1,
+        "velocity": 0.14,
         "isSelf": false
       },
       {
         "slug": "davidackerman/still-life",
-        "rank": 4,
-        "stars": 1,
-        "velocity": 0.09,
-        "isSelf": false
-      },
-      {
-        "slug": "elcoosp/guiwright",
-        "rank": 5,
+        "rank": 3,
         "stars": 1,
         "velocity": 0.08,
         "isSelf": false
       },
       {
-        "slug": "CorvidLabs/chough",
+        "slug": "glastor-core/.github",
+        "rank": 4,
+        "stars": 1,
+        "velocity": 0.03,
+        "isSelf": false
+      },
+      {
+        "slug": "brunovicco/codex-python-engineering-harness",
+        "rank": 5,
+        "stars": 1,
+        "velocity": 0.01,
+        "isSelf": false
+      },
+      {
+        "slug": "jpmorard/tokki-public",
         "rank": 6,
         "stars": 1,
-        "velocity": 0.05,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "cschmertz/deptime",
+        "slug": "shivamselam/seminara-agentic-suite",
         "rank": 7,
         "stars": 1,
-        "velocity": 0.04,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "mawena/CCS",
+        "slug": "zhizhixia/enough",
         "rank": 8,
         "stars": 1,
-        "velocity": 0.04,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "CartagoGit/DelendAI",
+        "slug": "aefreedman/pi-plastic",
         "rank": 9,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "iKy0ff/manga-pace-ledger",
+        "slug": "atsupi/CDK-ECS-Startup",
         "rank": 10,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "Mohith535/opportunity-hunter",
+        "slug": "markoblogo/ABVXsite",
         "rank": 11,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "aredwan-xyz/techpulse-daily",
+        "slug": "StorywithLove/envdata-sync",
         "rank": 12,
         "stars": 1,
         "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "simonesugliano/ArtiTam-Gallery",
+        "slug": "torenCodes/invest-lab",
         "rank": 13,
         "stars": 1,
         "velocity": 0,
@@ -177,90 +179,95 @@
       "at": "2026-11-19T15:54:27.862Z",
       "rank": 1,
       "clusterSize": 13
+    },
+    {
+      "at": "2026-11-20T15:38:08.204Z",
+      "rank": 1,
+      "clusterSize": 13
     }
   ],
   "rivals": [
     {
-      "slug": "simonesugliano/ArtiTam-Gallery",
+      "slug": "shivamselam/seminara-agentic-suite",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "Asmodeus14/ChronoStack",
+      "stars": 1,
+      "velocity": 0.14,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "markoblogo/ABVXsite",
       "stars": 1,
       "velocity": 0,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "rauni5/gclone",
+      "slug": "brunovicco/codex-python-engineering-harness",
       "stars": 1,
-      "velocity": 0.13,
+      "velocity": 0.01,
       "kind": "topic",
       "ahead": null
     },
     {
       "slug": "davidackerman/still-life",
       "stars": 1,
-      "velocity": 0.09,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "mawena/CCS",
-      "stars": 1,
-      "velocity": 0.04,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "Mohith535/opportunity-hunter",
-      "stars": 1,
-      "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "CorvidLabs/chough",
-      "stars": 1,
-      "velocity": 0.05,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "CartagoGit/DelendAI",
-      "stars": 1,
-      "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "q529665795k/cf-webhook-inspector",
-      "stars": 1,
-      "velocity": 0.1,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "elcoosp/guiwright",
-      "stars": 1,
       "velocity": 0.08,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "iKy0ff/manga-pace-ledger",
-      "stars": 1,
-      "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "aredwan-xyz/techpulse-daily",
+      "slug": "aefreedman/pi-plastic",
       "stars": 1,
       "velocity": 0,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "cschmertz/deptime",
+      "slug": "StorywithLove/envdata-sync",
       "stars": 1,
-      "velocity": 0.04,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "zhizhixia/enough",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "jpmorard/tokki-public",
+      "stars": 1,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "atsupi/CDK-ECS-Startup",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "glastor-core/.github",
+      "stars": 1,
+      "velocity": 0.03,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "torenCodes/invest-lab",
+      "stars": 1,
+      "velocity": 0,
       "kind": "topic",
       "ahead": null
     }
@@ -268,15 +275,15 @@
   "fans": [],
   "forks": [],
   "warnings": [
-    "star velocity simonesugliano/ArtiTam-Gallery: GitHub rate limit reached — showing last known numbers",
-    "star velocity rauni5/gclone: GitHub rate limit reached — showing last known numbers",
+    "star velocity shivamselam/seminara-agentic-suite: GitHub rate limit reached — showing last known numbers",
+    "star velocity Asmodeus14/ChronoStack: GitHub rate limit reached — showing last known numbers",
+    "star velocity markoblogo/ABVXsite: GitHub rate limit reached — showing last known numbers",
+    "star velocity brunovicco/codex-python-engineering-harness: GitHub rate limit reached — showing last known numbers",
     "star velocity davidackerman/still-life: GitHub rate limit reached — showing last known numbers",
-    "star velocity mawena/CCS: GitHub rate limit reached — showing last known numbers",
-    "star velocity Mohith535/opportunity-hunter: GitHub rate limit reached — showing last known numbers",
-    "star velocity CorvidLabs/chough: GitHub rate limit reached — showing last known numbers",
-    "star velocity CartagoGit/DelendAI: GitHub rate limit reached — showing last known numbers",
-    "star velocity q529665795k/cf-webhook-inspector: GitHub rate limit reached — showing last known numbers",
-    "star velocity elcoosp/guiwright: GitHub rate limit reached — showing last known numbers",
-    "star velocity iKy0ff/manga-pace-ledger: GitHub rate limit reached — showing last known numbers"
+    "star velocity aefreedman/pi-plastic: GitHub rate limit reached — showing last known numbers",
+    "star velocity StorywithLove/envdata-sync: GitHub rate limit reached — showing last known numbers",
+    "star velocity zhizhixia/enough: GitHub rate limit reached — showing last known numbers",
+    "star velocity jpmorard/tokki-public: GitHub rate limit reached — showing last known numbers",
+    "star velocity atsupi/CDK-ECS-Startup: GitHub rate limit reached — showing last known numbers"
   ]
 }

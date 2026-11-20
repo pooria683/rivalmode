@@ -136,12 +136,12 @@ in `.github/workflows/`, hourly and daily.
 <!-- rivalmode:start scoreboard -->
 <img src="assets/rivalmode/scoreboard.svg" alt="RivalMode scoreboard for pooria683/rivalmode" width="860" />
 
-**You are #1 of 13 in your topic cluster.** ⚠️ `rauni5/gclone` is gaining faster than you (0.13★/day vs 0). Hold the line.
+**You are #1 of 13 in your topic cluster.** ⚠️ `Asmodeus14/ChronoStack` is gaining faster than you (0.14★/day vs 0). Hold the line.
 
-**Momentum +100** ▲ on fire · 36 commits this week vs 0 last week · 5-day streak (+15)
+**Momentum +100** ▲ on fire · 37 commits this week vs 0 last week · 5-day streak (+15)
 
 > [!NOTE]
-> Some numbers are stale this run — rival ladder cached from the last daily run
+> Some numbers are stale this run — rival star velocity is estimated (some lookups were skipped)
 
 <sub>updated just now · every number comes from the GitHub API, nothing is hand-edited</sub>
 <!-- rivalmode:end scoreboard -->
@@ -335,5 +335,5 @@ re-render (must be a no-op) → uninstall (must restore the README byte for byte
 one place above you.</sub>
 
 <!-- rivalmode:start footer -->
-<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-20 11:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
+<sub>⚔️ [RivalMode](https://github.com/pooria683/rivalmode) · theme `midnight` · generated 2026-11-20 15:00 UTC · pooria683/rivalmode · [uninstall is deleting one folder](https://github.com/pooria683/rivalmode#uninstall)</sub>
 <!-- rivalmode:end footer -->
