@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-20T15:38:08.204Z",
+  "generatedAt": "2026-11-21T14:48:09.475Z",
   "mode": "ranked",
   "topicCluster": [
     "github-actions",
@@ -24,7 +24,22 @@
       "passed": [],
       "passedBy": [],
       "entered": [
+        "hemanathk636/secretguard",
+        "app/opencode-typescript",
+        "askalf/ci-wizard",
+        "cschmertz/deptime",
+        "FrappaF/Ordito",
+        "MasterPandaa/UltimateGravity",
+        "gaurav-gandhi-2411/gold-rate-tracker",
+        "Saif658/LLMstats",
+        "pythonIsFast/CodeLithe",
+        "SUDARSHANCHAUDHARI/ChangeGuardAI",
+        "simonesugliano/ArtiTam-Gallery",
+        "Zerolost/VqssLs"
+      ],
+      "left": [
         "Asmodeus14/ChronoStack",
+        "davidackerman/still-life",
         "glastor-core/.github",
         "brunovicco/codex-python-engineering-harness",
         "jpmorard/tokki-public",
@@ -35,19 +50,6 @@
         "markoblogo/ABVXsite",
         "StorywithLove/envdata-sync",
         "torenCodes/invest-lab"
-      ],
-      "left": [
-        "rauni5/gclone",
-        "q529665795k/cf-webhook-inspector",
-        "elcoosp/guiwright",
-        "CorvidLabs/chough",
-        "cschmertz/deptime",
-        "mawena/CCS",
-        "CartagoGit/DelendAI",
-        "iKy0ff/manga-pace-ledger",
-        "Mohith535/opportunity-hunter",
-        "aredwan-xyz/techpulse-daily",
-        "simonesugliano/ArtiTam-Gallery"
       ]
     },
     "entries": [
@@ -59,84 +61,84 @@
         "isSelf": true
       },
       {
-        "slug": "Asmodeus14/ChronoStack",
+        "slug": "hemanathk636/secretguard",
         "rank": 2,
         "stars": 1,
-        "velocity": 0.14,
+        "velocity": 0.13,
         "isSelf": false
       },
       {
-        "slug": "davidackerman/still-life",
+        "slug": "app/opencode-typescript",
         "rank": 3,
         "stars": 1,
-        "velocity": 0.08,
+        "velocity": 0.12,
         "isSelf": false
       },
       {
-        "slug": "glastor-core/.github",
+        "slug": "askalf/ci-wizard",
         "rank": 4,
-        "stars": 1,
-        "velocity": 0.03,
+        "stars": 2,
+        "velocity": 0.11,
         "isSelf": false
       },
       {
-        "slug": "brunovicco/codex-python-engineering-harness",
+        "slug": "cschmertz/deptime",
         "rank": 5,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0.04,
         "isSelf": false
       },
       {
-        "slug": "jpmorard/tokki-public",
+        "slug": "FrappaF/Ordito",
         "rank": 6,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0.04,
         "isSelf": false
       },
       {
-        "slug": "shivamselam/seminara-agentic-suite",
+        "slug": "MasterPandaa/UltimateGravity",
         "rank": 7,
         "stars": 1,
-        "velocity": 0.01,
+        "velocity": 0.04,
         "isSelf": false
       },
       {
-        "slug": "zhizhixia/enough",
+        "slug": "gaurav-gandhi-2411/gold-rate-tracker",
         "rank": 8,
-        "stars": 1,
+        "stars": 2,
         "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "aefreedman/pi-plastic",
+        "slug": "Saif658/LLMstats",
         "rank": 9,
-        "stars": 1,
-        "velocity": 0,
+        "stars": 2,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "atsupi/CDK-ECS-Startup",
+        "slug": "pythonIsFast/CodeLithe",
         "rank": 10,
         "stars": 1,
-        "velocity": 0,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "markoblogo/ABVXsite",
+        "slug": "SUDARSHANCHAUDHARI/ChangeGuardAI",
         "rank": 11,
         "stars": 1,
-        "velocity": 0,
+        "velocity": 0.01,
         "isSelf": false
       },
       {
-        "slug": "StorywithLove/envdata-sync",
+        "slug": "simonesugliano/ArtiTam-Gallery",
         "rank": 12,
         "stars": 1,
         "velocity": 0,
         "isSelf": false
       },
       {
-        "slug": "torenCodes/invest-lab",
+        "slug": "Zerolost/VqssLs",
         "rank": 13,
         "stars": 1,
         "velocity": 0,
@@ -184,90 +186,95 @@
       "at": "2026-11-20T15:38:08.204Z",
       "rank": 1,
       "clusterSize": 13
+    },
+    {
+      "at": "2026-11-21T14:48:09.475Z",
+      "rank": 1,
+      "clusterSize": 13
     }
   ],
   "rivals": [
     {
-      "slug": "shivamselam/seminara-agentic-suite",
+      "slug": "gaurav-gandhi-2411/gold-rate-tracker",
+      "stars": 2,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "askalf/ci-wizard",
+      "stars": 2,
+      "velocity": 0.11,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "Saif658/LLMstats",
+      "stars": 2,
+      "velocity": 0.01,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "MasterPandaa/UltimateGravity",
+      "stars": 1,
+      "velocity": 0.04,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "pythonIsFast/CodeLithe",
       "stars": 1,
       "velocity": 0.01,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "Asmodeus14/ChronoStack",
+      "slug": "hemanathk636/secretguard",
       "stars": 1,
-      "velocity": 0.14,
+      "velocity": 0.13,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "markoblogo/ABVXsite",
+      "slug": "Zerolost/VqssLs",
       "stars": 1,
       "velocity": 0,
       "kind": "topic",
       "ahead": null
     },
     {
-      "slug": "brunovicco/codex-python-engineering-harness",
+      "slug": "app/opencode-typescript",
+      "stars": 1,
+      "velocity": 0.12,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "cschmertz/deptime",
+      "stars": 1,
+      "velocity": 0.04,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "FrappaF/Ordito",
+      "stars": 1,
+      "velocity": 0.04,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "simonesugliano/ArtiTam-Gallery",
+      "stars": 1,
+      "velocity": 0,
+      "kind": "topic",
+      "ahead": null
+    },
+    {
+      "slug": "SUDARSHANCHAUDHARI/ChangeGuardAI",
       "stars": 1,
       "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "davidackerman/still-life",
-      "stars": 1,
-      "velocity": 0.08,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "aefreedman/pi-plastic",
-      "stars": 1,
-      "velocity": 0,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "StorywithLove/envdata-sync",
-      "stars": 1,
-      "velocity": 0,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "zhizhixia/enough",
-      "stars": 1,
-      "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "jpmorard/tokki-public",
-      "stars": 1,
-      "velocity": 0.01,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "atsupi/CDK-ECS-Startup",
-      "stars": 1,
-      "velocity": 0,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "glastor-core/.github",
-      "stars": 1,
-      "velocity": 0.03,
-      "kind": "topic",
-      "ahead": null
-    },
-    {
-      "slug": "torenCodes/invest-lab",
-      "stars": 1,
-      "velocity": 0,
       "kind": "topic",
       "ahead": null
     }
@@ -275,15 +282,15 @@
   "fans": [],
   "forks": [],
   "warnings": [
-    "star velocity shivamselam/seminara-agentic-suite: GitHub rate limit reached — showing last known numbers",
-    "star velocity Asmodeus14/ChronoStack: GitHub rate limit reached — showing last known numbers",
-    "star velocity markoblogo/ABVXsite: GitHub rate limit reached — showing last known numbers",
-    "star velocity brunovicco/codex-python-engineering-harness: GitHub rate limit reached — showing last known numbers",
-    "star velocity davidackerman/still-life: GitHub rate limit reached — showing last known numbers",
-    "star velocity aefreedman/pi-plastic: GitHub rate limit reached — showing last known numbers",
-    "star velocity StorywithLove/envdata-sync: GitHub rate limit reached — showing last known numbers",
-    "star velocity zhizhixia/enough: GitHub rate limit reached — showing last known numbers",
-    "star velocity jpmorard/tokki-public: GitHub rate limit reached — showing last known numbers",
-    "star velocity atsupi/CDK-ECS-Startup: GitHub rate limit reached — showing last known numbers"
+    "star velocity gaurav-gandhi-2411/gold-rate-tracker: GitHub rate limit reached — showing last known numbers",
+    "star velocity askalf/ci-wizard: GitHub rate limit reached — showing last known numbers",
+    "star velocity Saif658/LLMstats: GitHub rate limit reached — showing last known numbers",
+    "star velocity MasterPandaa/UltimateGravity: GitHub rate limit reached — showing last known numbers",
+    "star velocity pythonIsFast/CodeLithe: GitHub rate limit reached — showing last known numbers",
+    "star velocity hemanathk636/secretguard: GitHub rate limit reached — showing last known numbers",
+    "star velocity Zerolost/VqssLs: GitHub rate limit reached — showing last known numbers",
+    "star velocity app/opencode-typescript: GitHub rate limit reached — showing last known numbers",
+    "star velocity cschmertz/deptime: GitHub rate limit reached — showing last known numbers",
+    "star velocity FrappaF/Ordito: GitHub rate limit reached — showing last known numbers"
   ]
 }
